@@ -32,11 +32,7 @@ export default function gameboardFactory() {
       hitShip ? hitShip.hit(coord) : this.missedAttacks.push(coord);
     },
     allShipsSunk() {
-      for (const ship of this.ships) {
-        if (ship.isSunk() == false) return false;
-      }
-
-      return true;
+      return this.ships.every((ship) => ship.isSunk());
     },
   };
 
