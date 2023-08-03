@@ -1,6 +1,6 @@
 import shipFactory from "./shipFactory";
 
-const compareArrays = (a, b) => {
+const arraysAreEqual = (a, b) => {
   return JSON.stringify(a) === JSON.stringify(b);
 };
 
@@ -8,7 +8,7 @@ function getHitShip(coord, ships) {
   let hitShip = null;
   for (const ship of ships) {
     ship.coordinates.forEach((position) => {
-      if (compareArrays(position, coord)) {
+      if (arraysAreEqual(position, coord)) {
         return (hitShip = ship);
       }
     });
@@ -16,6 +16,7 @@ function getHitShip(coord, ships) {
 
   return hitShip;
 }
+
 export default function gameboardFactory() {
   const gameboard = {
     ships: [],
@@ -30,7 +31,13 @@ export default function gameboardFactory() {
 
       hitShip ? hitShip.hit(coord) : this.missedAttacks.push(coord);
     },
-    allShipsSunk() {},
+    allShipsSunk() {
+      for (const ship of this.ships) {
+        if (ship.isSunk() == false) return false;
+      }
+
+      return true;
+    },
   };
 
   return gameboard;
