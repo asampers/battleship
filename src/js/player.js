@@ -1,6 +1,8 @@
 export default function player() {
   const player = {
-    makeGuess() {},
+    makeGuess(coord) {
+      return coord;
+    },
   };
 
   return player;

@@ -16,7 +16,7 @@ export default () => {
         ? [1, 0]
         : [0, 1];
     },
-    gameOver() {
+    over() {
       return this.gameBoards[this.enemyPlayer].allShipsSunk();
     },
   };
