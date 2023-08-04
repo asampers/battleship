@@ -6,18 +6,13 @@ export default () => {
   const game = {
     players: [player(), player()],
     gameBoards: [gameboardFactory(), gameboardFactory()],
-    currentPlayer: 0,
-    enemyPlayer: 1,
+    current: 0,
+    opponent: 1,
     switchPlayers() {
-      [this.currentPlayer, this.enemyPlayer] = [
-        this.currentPlayer === 0,
-        this.enemyPlayer === 1,
-      ]
-        ? [1, 0]
-        : [0, 1];
+      [this.current, this.opponent] = [this.current === 0] ? [1, 0] : [0, 1];
     },
     over() {
-      return this.gameBoards[this.enemyPlayer].allShipsSunk();
+      return this.gameBoards[this.opponent].allShipsSunk();
     },
   };
 
