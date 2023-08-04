@@ -2,10 +2,6 @@ const renderBoardTiles = (board) => {
   for (let x = 0; x < 10; x++) {
     renderRow(x, board);
   }
-
-  board.addEventListener("click", (e) => {
-    alert(e.target.getAttribute("data-id"));
-  });
 };
 
 const renderRow = (x, board) => {
@@ -23,19 +19,35 @@ const renderTile = (id) => {
   return tile;
 };
 
-const setTileColor = (player, position) => {
+const findTile = (player, position) => {
   const board = document.querySelector(`.${player}-board`);
   const tile = board.querySelector(`[data-id='${position}']`);
+
+  return tile;
+};
+
+const setTileColor = (tile) => {
   tile.classList.remove("empty");
   tile.classList.add("occupied");
+};
+
+const setTileStatus = (tile, tileStatus) => {
+  tile.classList.add(tileStatus);
 };
 
 const renderShips = (player, gameShips) => {
   for (const ship of gameShips) {
     ship.coordinates.forEach((position) => {
-      setTileColor(player, position);
+      let tile = findTile(player, position);
+      setTileColor(tile);
     });
   }
+};
+
+const renderAttack = (player, coord, attack) => {
+  let tile = findTile(player, coord);
+
+  setTileStatus(tile, attack);
 };
 
 const renderBoard = (player, actionText, boardGame) => {
@@ -62,4 +74,4 @@ const renderBoard = (player, actionText, boardGame) => {
   return display;
 };
 
-export { renderBoard, renderShips };
+export { renderBoard, renderShips, renderAttack };

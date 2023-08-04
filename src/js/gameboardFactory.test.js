@@ -18,14 +18,16 @@ test("can place a ship", () => {
 });
 
 test("can record a hit", () => {
-  gameboard.receiveAttack([1, 1]);
+  let attack = gameboard.receiveAttack([1, 1]);
   expect(gameboard.missedAttacks).toEqual([]);
   expect(placedShip.hits).toEqual([[1, 1]]);
+  expect(attack).toBe("hit");
 });
 
 test("can record a miss", () => {
-  gameboard.receiveAttack([2, 1]);
+  let attack = gameboard.receiveAttack([2, 1]);
   expect(gameboard.missedAttacks).toEqual([[2, 1]]);
+  expect(attack).toBe("miss");
 });
 
 test("can tell when ships not all sunk", () => {

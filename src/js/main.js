@@ -3,7 +3,7 @@ import "../scss/styles.scss";
 
 // Import all of Bootstrap's JS
 import * as bootstrap from "bootstrap";
-import { renderBoard, renderShips } from "./domManager";
+import { renderBoard, renderShips, renderAttack } from "./domManager";
 import Game from "./game";
 
 const player1Default = [
@@ -54,6 +54,26 @@ const player2 = renderBoard(
   "Click on this board to sink their ships!",
   game.gameBoards[game.opponent]
 );
+
+player1.addEventListener("click", (e) => {
+  let coord = e.target.getAttribute("data-id");
+  let arr = coord.split("");
+  let array = [Number(arr[0]), Number(arr[2])];
+  console.log(JSON.stringify(array));
+  console.log(JSON.stringify([1, 1]));
+  let attack = game.gameBoards[game.current].receiveAttack(array);
+  alert(attack);
+  renderAttack("Player", coord, attack);
+});
+
+player2.addEventListener("click", (e) => {
+  let coord = e.target.getAttribute("data-id");
+  let arr = coord.split();
+  alert(typeof arr);
+  let attack = game.gameBoards[game.opponent].receiveAttack(arr);
+  alert(attack);
+  renderAttack("Computer", coord, attack);
+});
 
 const boards = document.createElement("div");
 boards.className = "d-flex";

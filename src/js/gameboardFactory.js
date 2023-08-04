@@ -32,6 +32,7 @@ export default function gameboardFactory() {
       hitShip ? hitShip.hit(coord) : this.missedAttacks.push(coord);
       return hitShip ? "hit" : "miss";
     },
+
     allShipsSunk() {
       return this.ships.every((ship) => ship.isSunk());
     },

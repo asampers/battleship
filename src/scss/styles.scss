@@ -23,3 +23,13 @@
 .occupied {
   background: grey;
 }
+
+.hit {
+  content: "X";
+  background: red;
+}
+
+.miss {
+  content: "--";
+  background: lightblue;
+}
