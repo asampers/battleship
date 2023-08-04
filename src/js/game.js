@@ -1,5 +1,4 @@
 import gameboardFactory from "./gameboardFactory";
-import shipFactory from "./shipFactory";
 import player from "./player";
 
 export default () => {
@@ -13,6 +12,24 @@ export default () => {
     },
     over() {
       return this.gameBoards[this.opponent].allShipsSunk();
+    },
+    takeTurn() {
+      let coord = this.players[this.current].makeGuess([4, 4]);
+      return this.gameBoards[this.opponent].receiveAttack(coord);
+    },
+    play() {
+      let winner = null;
+      while (!winner) {
+        let status = this.takeTurn();
+        if (status == "miss") {
+          this.switchPlayers();
+        }
+        if (status == "hit" && this.over()) {
+          winner = this.players[this.current];
+          break;
+        }
+      }
+      return winner;
     },
   };
 

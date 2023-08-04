@@ -1,8 +1,11 @@
 import Game from "./game";
 
 const game = Game();
-game.gameBoards[0].placeShip([[1, 1]]);
-game.gameBoards[1].placeShip([[2, 2]]);
+
+beforeAll(() => {
+  game.gameBoards[0].placeShip([[1, 1]]);
+  game.gameBoards[1].placeShip([[2, 2]]);
+});
 
 test("can switch players", () => {
   game.switchPlayers();
@@ -26,4 +29,19 @@ test("can tell when game is over", () => {
   expect(enemyShips[0].hits).toEqual([[1, 1]]);
   expect(enemyGameboard.missedAttacks).toEqual([[3, 3]]);
   expect(game.over()).toBe(true);
+});
+
+describe("testing play funtion", () => {
+  beforeAll(() => {
+    game.gameBoards[0].placeShip([[4, 4]]);
+    game.switchPlayers();
+  });
+
+  test("can play through rounds successfully", () => {
+    let winner = game.play();
+    expect(winner).toBe(game.players[game.current]);
+    expect(game.gameBoards[game.opponent].missedAttacks).toEqual([[3, 3]]);
+    expect(game.opponent).toBe(0);
+    expect(game.gameBoards[game.opponent].ships.length).toBe(2);
+  });
 });
