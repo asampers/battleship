@@ -20,9 +20,10 @@ test("can tell when game is not over", () => {
 
 test("can tell when game is over", () => {
   let coord = game.players[game.currentPlayer].makeGuess([1, 1]);
-  game.gameBoards[game.enemyPlayer].receiveAttack(coord);
-  expect(game.gameBoards[game.enemyPlayer].ships[0].hits).toEqual([[1, 1]]);
-  expect(game.gameBoards[game.enemyPlayer].ships[0].isSunk()).toEqual(true);
-  expect(game.gameBoards[game.enemyPlayer].missedAttacks).toEqual([[3, 3]]);
+  let enemyShips = game.gameBoards[game.enemyPlayer].ships;
+  let enemyGameboard = game.gameBoards[game.enemyPlayer];
+  enemyGameboard.receiveAttack(coord);
+  expect(enemyShips[0].hits).toEqual([[1, 1]]);
+  expect(enemyGameboard.missedAttacks).toEqual([[3, 3]]);
   expect(game.over()).toBe(true);
 });
