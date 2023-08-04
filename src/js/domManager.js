@@ -4,7 +4,7 @@ const renderBoardTiles = (board) => {
   }
 
   board.addEventListener("click", (e) => {
-    alert(e.target.id);
+    alert(e.target.getAttribute("data-id"));
   });
 };
 
@@ -17,15 +17,30 @@ const renderRow = (x, board) => {
 
 const renderTile = (id) => {
   const tile = document.createElement("button");
-  tile.id = id;
+  tile.setAttribute("data-id", id);
   tile.className = "tile border border-black rounded empty";
 
   return tile;
 };
 
+const setTileColor = (player, position) => {
+  const board = document.querySelector(`.${player}-board`);
+  const tile = board.querySelector(`[data-id='${position}']`);
+  tile.classList.remove("empty");
+  tile.classList.add("occupied");
+};
+
+const renderShips = (player, gameShips) => {
+  for (const ship of gameShips) {
+    ship.coordinates.forEach((position) => {
+      setTileColor(player, position);
+    });
+  }
+};
+
 const renderBoard = (player, actionText, boardGame) => {
   const display = document.createElement("div");
-  display.className = "container d-flex flex-column align-items-center";
+  display.className = `${player} container d-flex flex-column align-items-center`;
 
   const title = document.createElement("h1");
   title.textContent = player;
@@ -47,4 +62,4 @@ const renderBoard = (player, actionText, boardGame) => {
   return display;
 };
 
-export { renderBoard };
+export { renderBoard, renderShips };

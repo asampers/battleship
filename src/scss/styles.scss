@@ -13,5 +13,13 @@
 .tile {
   height: 2em;
   width: 2em;
+  
+}
+
+.empty {
   background: white;
+}
+
+.occupied {
+  background: grey;
 }
