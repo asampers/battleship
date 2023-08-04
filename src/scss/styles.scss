@@ -1,2 +1,17 @@
 // Import all of Bootstrap's CSS
 @import "bootstrap/scss/bootstrap";
+
+.grid {
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  margin: 0px auto;
+  padding: 1em;
+  gap: 2px;
+}
+
+.tile {
+  height: 2em;
+  width: 2em;
+  background: white;
+}
