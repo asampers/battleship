@@ -56,18 +56,20 @@ const player2 = renderBoard(
 );
 
 player1.addEventListener("click", (e) => {
-  let coord = e.target.getAttribute("data-id");
-  let arr = coord.split("");
-  let array = [Number(arr[0]), Number(arr[2])];
-  let attack = game.gameBoards[game.current].receiveAttack(array);
+  let coord = [
+    Number(e.target.getAttribute("data-x")),
+    Number(e.target.getAttribute("data-y")),
+  ];
+  let attack = game.gameBoards[game.current].receiveAttack(coord);
   renderAttack("Player", coord, attack);
 });
 
 player2.addEventListener("click", (e) => {
-  let coord = e.target.getAttribute("data-id");
-  let arr = coord.split("");
-  let array = [Number(arr[0]), Number(arr[2])];
-  let attack = game.gameBoards[game.opponent].receiveAttack(array);
+  let coord = [
+    Number(e.target.getAttribute("data-x")),
+    Number(e.target.getAttribute("data-y")),
+  ];
+  let attack = game.gameBoards[game.opponent].receiveAttack(coord);
   renderAttack("Computer", coord, attack);
 });
 

@@ -6,22 +6,25 @@ const renderBoardTiles = (board) => {
 
 const renderRow = (x, board) => {
   for (let y = 0; y < 10; y++) {
-    const tile = renderTile([x, y]);
+    const tile = renderTile(x, y);
     board.appendChild(tile);
   }
 };
 
-const renderTile = (id) => {
+const renderTile = (x, y) => {
   const tile = document.createElement("button");
-  tile.setAttribute("data-id", id);
+  tile.setAttribute("data-x", x);
+  tile.setAttribute("data-y", y);
   tile.className = "tile border border-black rounded empty";
 
   return tile;
 };
 
 const findTile = (player, position) => {
+  let x = position[0];
+  let y = position[1];
   const board = document.querySelector(`.${player}-board`);
-  const tile = board.querySelector(`[data-id='${position}']`);
+  const tile = board.querySelector(`[data-x='${x}'][data-y='${y}']`);
 
   return tile;
 };
