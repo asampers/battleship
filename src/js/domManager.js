@@ -1,21 +1,22 @@
 function message(attack) {
-  let message;
   switch (attack) {
     case "miss":
-      return (message = "took a shot and missed.");
+      return "took a shot and missed.";
     case "hit":
-      return (message = "hit a ship!");
+      return "hit a ship!";
     case "sunk":
-      return (message = "sunk a ship!");
+      return "sunk a ship!";
   }
 }
 
 const renderGameOver = (name) => {
   let resultNodes = document.querySelectorAll(".result");
   let playAgain = document.querySelector(".play");
+
   for (const node of resultNodes) {
     node.textContent = `${name} won!`;
   }
+
   playAgain.textContent = "Reset";
   playAgain.addEventListener("click", () => {
     window.location.reload();
@@ -52,7 +53,7 @@ const renderTile = (x, y) => {
 const findTile = (player, position) => {
   let x = position[0];
   let y = position[1];
-  const board = document.querySelector(`.${player}-board`);
+  const board = document.querySelector(`.${player} .board`);
   const tile = board.querySelector(`[data-x='${x}'][data-y='${y}']`);
 
   return tile;
@@ -107,7 +108,7 @@ const renderBoard = (player, actionText, boardGame) => {
   result.textContent = "No moves yet.";
 
   const board = document.createElement("div");
-  board.className = `${player}-board grid container`;
+  board.className = "board grid container";
   renderBoardTiles(board);
 
   display.append(title, action, info, result, board);

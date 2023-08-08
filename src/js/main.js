@@ -63,7 +63,13 @@ const player2 = renderBoard(
 
 const enemyIsComputer = game.players[1].name == "Computer";
 
-const stepThruPlayerTurn = (enemy, current, coord, attack) => {
+function processCoords(e) {
+  return [
+    Number(e.target.getAttribute("data-x")),
+    Number(e.target.getAttribute("data-y")),
+  ];
+}
+const renderPlayerTurn = (enemy, current, coord, attack) => {
   renderAttack(
     game.players[enemy].name,
     game.players[current].name,
@@ -78,28 +84,24 @@ const stepThruPlayerTurn = (enemy, current, coord, attack) => {
 };
 
 player1.addEventListener("click", (e) => {
-  let coord = [
-    Number(e.target.getAttribute("data-x")),
-    Number(e.target.getAttribute("data-y")),
-  ];
+  if (game.over()) return;
+  let coord = processCoords(e);
   let attack = game.playRound(coord);
-  stepThruPlayerTurn(0, 1, coord, attack);
+  renderPlayerTurn(0, 1, coord, attack);
 });
 
 player2.addEventListener("click", (e) => {
-  let coord = [
-    Number(e.target.getAttribute("data-x")),
-    Number(e.target.getAttribute("data-y")),
-  ];
+  if (game.over()) return;
+  let coord = processCoords(e);
   let attack = game.playRound(coord);
-  stepThruPlayerTurn(1, 0, coord, attack);
+  renderPlayerTurn(1, 0, coord, attack);
 
   if (enemyIsComputer && attack == "miss") {
     let attack;
     while (attack != "miss") {
       let coord = game.players[1].makeGuess();
       attack = game.playRound(coord);
-      stepThruPlayerTurn(0, 1, coord, attack);
+      renderPlayerTurn(0, 1, coord, attack);
     }
   }
 });
