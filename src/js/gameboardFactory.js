@@ -36,6 +36,16 @@ export default function gameboardFactory() {
     allShipsSunk() {
       return this.ships.every((ship) => ship.isSunk());
     },
+
+    remainingShips() {
+      let remainingShips = this.ships.length;
+      for (const ship of this.ships) {
+        if (ship.isSunk()) {
+          remainingShips -= 1;
+        }
+      }
+      return remainingShips;
+    },
   };
 
   return gameboard;

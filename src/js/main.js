@@ -3,7 +3,12 @@ import "../scss/styles.scss";
 
 // Import all of Bootstrap's JS
 import * as bootstrap from "bootstrap";
-import { renderBoard, renderShips, renderAttack } from "./domManager";
+import {
+  renderBoard,
+  renderShips,
+  renderAttack,
+  updateShipsRemain,
+} from "./domManager";
 import Game from "./game";
 
 const player1Default = [
@@ -60,8 +65,9 @@ player1.addEventListener("click", (e) => {
     Number(e.target.getAttribute("data-x")),
     Number(e.target.getAttribute("data-y")),
   ];
-  let attack = game.gameBoards[game.current].receiveAttack(coord);
+  let attack = game.playRound(coord);
   renderAttack("Player", coord, attack);
+  updateShipsRemain("Player", game.gameBoards[0].remainingShips());
 });
 
 player2.addEventListener("click", (e) => {
@@ -69,8 +75,9 @@ player2.addEventListener("click", (e) => {
     Number(e.target.getAttribute("data-x")),
     Number(e.target.getAttribute("data-y")),
   ];
-  let attack = game.gameBoards[game.opponent].receiveAttack(coord);
+  let attack = game.playRound(coord);
   renderAttack("Computer", coord, attack);
+  updateShipsRemain("Computer", game.gameBoards[1].remainingShips());
 });
 
 const boards = document.createElement("div");

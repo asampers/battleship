@@ -3,33 +3,33 @@ import player from "./player";
 
 export default () => {
   const game = {
-    players: [player(), player()],
+    players: [player("Player"), player("Computer")],
     gameBoards: [gameboardFactory(), gameboardFactory()],
     current: 0,
     opponent: 1,
     switchPlayers() {
-      [this.current, this.opponent] = [this.current === 0] ? [1, 0] : [0, 1];
+      this.current = this.current === 0 ? 1 : 0;
+      this.opponent = this.opponent === 0 ? 1 : 0;
     },
     over() {
       return this.gameBoards[this.opponent].allShipsSunk();
     },
-    takeTurn() {
-      let coord = this.players[this.current].makeGuess([4, 4]);
+    takeTurn(guess) {
+      let coord = this.players[this.current].makeGuess(guess);
       return this.gameBoards[this.opponent].receiveAttack(coord);
     },
-    play() {
-      let winner = null;
-      while (!winner) {
-        let status = this.takeTurn();
-        if (status == "miss") {
-          this.switchPlayers();
-        }
-        if (status == "hit" && this.over()) {
-          winner = this.players[this.current];
-          break;
-        }
+    playRound(guess) {
+      let status = this.takeTurn(guess);
+      if (status === "miss") {
+        this.switchPlayers();
+        console.log(`${[this.current]}`);
       }
-      return winner;
+      if (status == "hit" && this.over()) {
+        let winner = this.players[this.current].name;
+        console.log(winner);
+      }
+
+      return status;
     },
   };
 

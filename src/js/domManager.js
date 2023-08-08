@@ -1,3 +1,8 @@
+const updateShipsRemain = (player, length) => {
+  const info = document.querySelector(`.${player} .info`);
+  info.textContent = `Ships remaining: ${length}`;
+};
+
 const renderBoardTiles = (board) => {
   for (let x = 0; x < 10; x++) {
     renderRow(x, board);
@@ -64,6 +69,7 @@ const renderBoard = (player, actionText, boardGame) => {
   action.textContent = actionText;
 
   const info = document.createElement("div");
+  info.className = "info";
   info.textContent = `Ships remaining: ${boardGame.ships.length}`;
 
   const result = document.createElement("div");
@@ -77,4 +83,4 @@ const renderBoard = (player, actionText, boardGame) => {
   return display;
 };
 
-export { renderBoard, renderShips, renderAttack };
+export { renderBoard, renderShips, renderAttack, updateShipsRemain };
