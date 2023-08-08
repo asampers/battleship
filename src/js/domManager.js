@@ -1,3 +1,27 @@
+function message(attack) {
+  let message;
+  switch (attack) {
+    case "miss":
+      return (message = "took a shot and missed.");
+    case "hit":
+      return (message = "hit a ship!");
+    case "sunk":
+      return (message = "sunk a ship!");
+  }
+}
+
+const renderGameOver = (name) => {
+  let result = document.querySelectorAll(".result");
+  let playAgain = document.querySelector(".play");
+  for (const node of result) {
+    node.textContent = `${name} won!`;
+  }
+  playAgain.textContent = "Reset";
+  playAgain.addEventListener("click", () => {
+    window.location.reload();
+  });
+};
+
 const updateShipsRemain = (player, length) => {
   const info = document.querySelector(`.${player} .info`);
   info.textContent = `Ships remaining: ${length}`;
@@ -43,6 +67,11 @@ const setTileStatus = (tile, tileStatus) => {
   tile.classList.add(tileStatus);
 };
 
+const setResultStatus = (player, attack) => {
+  let result = document.querySelector(`.${player} .result`);
+  result.textContent = `${player} ${message(attack)}`;
+};
+
 const renderShips = (player, gameShips) => {
   for (const ship of gameShips) {
     ship.coordinates.forEach((position) => {
@@ -52,10 +81,11 @@ const renderShips = (player, gameShips) => {
   }
 };
 
-const renderAttack = (player, coord, attack) => {
-  let tile = findTile(player, coord);
+const renderAttack = (thisBoard, thisPlayer, coord, attack) => {
+  let tile = findTile(thisBoard, coord);
 
   setTileStatus(tile, attack);
+  setResultStatus(thisPlayer, attack);
 };
 
 const renderBoard = (player, actionText, boardGame) => {
@@ -73,6 +103,8 @@ const renderBoard = (player, actionText, boardGame) => {
   info.textContent = `Ships remaining: ${boardGame.ships.length}`;
 
   const result = document.createElement("div");
+  result.className = "result";
+  result.textContent = "No moves yet.";
 
   const board = document.createElement("div");
   board.className = `${player}-board grid container`;
@@ -83,4 +115,10 @@ const renderBoard = (player, actionText, boardGame) => {
   return display;
 };
 
-export { renderBoard, renderShips, renderAttack, updateShipsRemain };
+export {
+  renderBoard,
+  renderShips,
+  renderAttack,
+  updateShipsRemain,
+  renderGameOver,
+};

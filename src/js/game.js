@@ -7,6 +7,7 @@ export default () => {
     gameBoards: [gameboardFactory(), gameboardFactory()],
     current: 0,
     opponent: 1,
+    winner: false,
     switchPlayers() {
       this.current = this.current === 0 ? 1 : 0;
       this.opponent = this.opponent === 0 ? 1 : 0;
@@ -22,11 +23,9 @@ export default () => {
       let status = this.takeTurn(guess);
       if (status === "miss") {
         this.switchPlayers();
-        console.log(`${[this.current]}`);
       }
-      if (status == "hit" && this.over()) {
-        let winner = this.players[this.current].name;
-        console.log(winner);
+      if (status == "sunk" && this.over()) {
+        this.winner = true;
       }
 
       return status;

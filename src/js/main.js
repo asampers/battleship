@@ -8,6 +8,7 @@ import {
   renderShips,
   renderAttack,
   updateShipsRemain,
+  renderGameOver,
 } from "./domManager";
 import Game from "./game";
 
@@ -66,8 +67,9 @@ player1.addEventListener("click", (e) => {
     Number(e.target.getAttribute("data-y")),
   ];
   let attack = game.playRound(coord);
-  renderAttack("Player", coord, attack);
+  renderAttack(game.players[0].name, game.players[1].name, coord, attack);
   updateShipsRemain("Player", game.gameBoards[0].remainingShips());
+  game.winner ? renderGameOver(game.players[game.current].name) : null;
 });
 
 player2.addEventListener("click", (e) => {
@@ -76,8 +78,9 @@ player2.addEventListener("click", (e) => {
     Number(e.target.getAttribute("data-y")),
   ];
   let attack = game.playRound(coord);
-  renderAttack("Computer", coord, attack);
+  renderAttack(game.players[1].name, game.players[0].name, coord, attack);
   updateShipsRemain("Computer", game.gameBoards[1].remainingShips());
+  game.winner ? renderGameOver(game.players[game.current].name) : null;
 });
 
 const boards = document.createElement("div");
