@@ -61,15 +61,29 @@ const player2 = renderBoard(
   game.gameBoards[game.opponent]
 );
 
+const enemyIsComputer = game.players[1].name == "Computer";
+
+const stepThruPlayerTurn = (enemy, current, coord, attack) => {
+  renderAttack(
+    game.players[enemy].name,
+    game.players[current].name,
+    coord,
+    attack
+  );
+  updateShipsRemain(
+    game.players[enemy].name,
+    game.gameBoards[enemy].remainingShips()
+  );
+  game.winner ? renderGameOver(game.players[current].name) : null;
+};
+
 player1.addEventListener("click", (e) => {
   let coord = [
     Number(e.target.getAttribute("data-x")),
     Number(e.target.getAttribute("data-y")),
   ];
   let attack = game.playRound(coord);
-  renderAttack(game.players[0].name, game.players[1].name, coord, attack);
-  updateShipsRemain("Player", game.gameBoards[0].remainingShips());
-  game.winner ? renderGameOver(game.players[game.current].name) : null;
+  stepThruPlayerTurn(0, 1, coord, attack);
 });
 
 player2.addEventListener("click", (e) => {
@@ -78,18 +92,14 @@ player2.addEventListener("click", (e) => {
     Number(e.target.getAttribute("data-y")),
   ];
   let attack = game.playRound(coord);
-  renderAttack(game.players[1].name, game.players[0].name, coord, attack);
-  updateShipsRemain("Computer", game.gameBoards[1].remainingShips());
-  game.winner ? renderGameOver(game.players[game.current].name) : null;
+  stepThruPlayerTurn(1, 0, coord, attack);
 
-  if (game.players[1].name == "Computer" && attack == "miss") {
+  if (enemyIsComputer && attack == "miss") {
     let attack;
     while (attack != "miss") {
-      let coord = game.players[1].makeGuess(null);
+      let coord = game.players[1].makeGuess();
       attack = game.playRound(coord);
-      renderAttack(game.players[0].name, game.players[1].name, coord, attack);
-      updateShipsRemain("Player", game.gameBoards[0].remainingShips());
-      game.winner ? renderGameOver(game.players[game.current].name) : null;
+      stepThruPlayerTurn(0, 1, coord, attack);
     }
   }
 });
