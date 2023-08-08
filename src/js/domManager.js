@@ -11,10 +11,15 @@ function message(attack) {
 
 const renderGameOver = (name) => {
   let resultNodes = document.querySelectorAll(".result");
+  let actionNodes = document.querySelectorAll(".action");
   let playAgain = document.querySelector(".play");
 
   for (const node of resultNodes) {
     node.textContent = `${name} won!`;
+  }
+
+  for (const node of actionNodes) {
+    node.textContent = "Game Over. Press RESET button to play again.";
   }
 
   playAgain.textContent = "Reset";
@@ -97,6 +102,7 @@ const renderBoard = (player, actionText, boardGame) => {
   title.textContent = player;
 
   const action = document.createElement("div");
+  action.className = "action";
   action.textContent = actionText;
 
   const info = document.createElement("div");
