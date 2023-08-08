@@ -84,14 +84,14 @@ const renderPlayerTurn = (enemy, current, coord, attack) => {
 };
 
 player1.addEventListener("click", (e) => {
-  if (game.over()) return;
+  if (game.winner) return;
   let coord = processCoords(e);
   let attack = game.playRound(coord);
   renderPlayerTurn(0, 1, coord, attack);
 });
 
 player2.addEventListener("click", (e) => {
-  if (game.over()) return;
+  if (game.winner) return;
   let coord = processCoords(e);
   let attack = game.playRound(coord);
   renderPlayerTurn(1, 0, coord, attack);
