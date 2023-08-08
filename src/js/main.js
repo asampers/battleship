@@ -81,6 +81,17 @@ player2.addEventListener("click", (e) => {
   renderAttack(game.players[1].name, game.players[0].name, coord, attack);
   updateShipsRemain("Computer", game.gameBoards[1].remainingShips());
   game.winner ? renderGameOver(game.players[game.current].name) : null;
+
+  if (game.players[1].name == "Computer" && attack == "miss") {
+    let attack;
+    while (attack != "miss") {
+      let coord = game.players[1].makeGuess(null);
+      attack = game.playRound(coord);
+      renderAttack(game.players[0].name, game.players[1].name, coord, attack);
+      updateShipsRemain("Player", game.gameBoards[0].remainingShips());
+      game.winner ? renderGameOver(game.players[game.current].name) : null;
+    }
+  }
 });
 
 const boards = document.createElement("div");

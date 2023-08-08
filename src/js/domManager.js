@@ -11,9 +11,9 @@ function message(attack) {
 }
 
 const renderGameOver = (name) => {
-  let result = document.querySelectorAll(".result");
+  let resultNodes = document.querySelectorAll(".result");
   let playAgain = document.querySelector(".play");
-  for (const node of result) {
+  for (const node of resultNodes) {
     node.textContent = `${name} won!`;
   }
   playAgain.textContent = "Reset";

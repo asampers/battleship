@@ -8,6 +8,9 @@ export default () => {
     current: 0,
     opponent: 1,
     winner: false,
+    playingAgainstComputer() {
+      return this.players[1].name === "Computer";
+    },
     switchPlayers() {
       this.current = this.current === 0 ? 1 : 0;
       this.opponent = this.opponent === 0 ? 1 : 0;
