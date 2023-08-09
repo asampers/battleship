@@ -69,6 +69,7 @@ function processCoords(e) {
     Number(e.target.getAttribute("data-y")),
   ];
 }
+
 const renderPlayerTurn = (coord, attack) => {
   renderAttack(
     game.players[game.opponent].name,
@@ -83,15 +84,7 @@ const renderPlayerTurn = (coord, attack) => {
   game.winner ? renderGameOver(game.players[game.current].name) : null;
 };
 
-player1.addEventListener("click", (e) => {
-  if (game.winner || game.current == 0) return;
-  let coord = processCoords(e);
-  let attack = game.playRound(coord);
-  renderPlayerTurn(coord, attack);
-});
-
-player2.addEventListener("click", (e) => {
-  if (game.winner || game.current == 1) return;
+const playAndRenderHumanTurn = (e) => {
   let coord = processCoords(e);
   if (game.players[game.current].alreadyGuessed(coord)) return;
   let attack = game.playRound(coord);
@@ -99,18 +92,31 @@ player2.addEventListener("click", (e) => {
   if (attack === "miss") {
     game.switchPlayers();
   }
+  if (game.playingAgainstComputer() && attack == "miss") {
+    playAndRenderComputerTurn();
+  }
+};
 
-  if (enemyIsComputer && attack == "miss") {
-    let attack;
-    while (attack != "miss") {
-      let coord = game.players[1].makeGuess();
-      attack = game.playRound(coord);
-      renderPlayerTurn(coord, attack);
-      if (attack === "miss") {
-        game.switchPlayers();
-      }
+const playAndRenderComputerTurn = () => {
+  let attack;
+  while (attack != "miss") {
+    let coord = game.players[1].makeGuess();
+    attack = game.playRound(coord);
+    renderPlayerTurn(coord, attack);
+    if (attack === "miss") {
+      game.switchPlayers();
     }
   }
+};
+
+player1.addEventListener("click", (e) => {
+  if (game.winner || game.current == 0) return;
+  playAndRenderHumanTurn(e);
+});
+
+player2.addEventListener("click", (e) => {
+  if (game.winner || game.current == 1) return;
+  playAndRenderHumanTurn(e);
 });
 
 const boards = document.createElement("div");
