@@ -1,3 +1,5 @@
+import { game } from "./main";
+
 function message(attack) {
   switch (attack) {
     case "miss":
@@ -9,13 +11,13 @@ function message(attack) {
   }
 }
 
-const renderGameOver = (name) => {
+const renderGameOver = () => {
   let resultNodes = document.querySelectorAll(".result");
   let actionNodes = document.querySelectorAll(".action");
   let playAgain = document.querySelector(".play");
 
   for (const node of resultNodes) {
-    node.textContent = `${name} won!`;
+    node.textContent = `${game.players[game.current].name} won!`;
   }
 
   for (const node of actionNodes) {
@@ -28,9 +30,11 @@ const renderGameOver = (name) => {
   });
 };
 
-const updateShipsRemain = (player, length) => {
+const updateShipsRemain = () => {
+  let player = game.players[game.opponent].name;
+  let ships = game.gameBoards[game.opponent].remainingShips();
   const info = document.querySelector(`.${player} .info`);
-  info.textContent = `Ships remaining: ${length}`;
+  info.textContent = `Ships remaining: ${ships}`;
 };
 
 const renderBoardTiles = (board) => {
@@ -87,7 +91,9 @@ const renderShips = (player, gameShips) => {
   }
 };
 
-const renderAttack = (thisBoard, thisPlayer, coord, attack) => {
+const renderAttack = (coord, attack) => {
+  let thisBoard = game.players[game.opponent].name;
+  let thisPlayer = game.players[game.current].name;
   let tile = findTile(thisBoard, coord);
 
   setTileStatus(tile, attack);

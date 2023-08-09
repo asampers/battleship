@@ -61,8 +61,6 @@ const player2 = renderBoard(
   game.gameBoards[game.opponent]
 );
 
-const enemyIsComputer = game.players[1].name == "Computer";
-
 function processCoords(e) {
   return [
     Number(e.target.getAttribute("data-x")),
@@ -70,25 +68,17 @@ function processCoords(e) {
   ];
 }
 
-const renderPlayerTurn = (coord, attack) => {
-  renderAttack(
-    game.players[game.opponent].name,
-    game.players[game.current].name,
-    coord,
-    attack
-  );
-  updateShipsRemain(
-    game.players[game.opponent].name,
-    game.gameBoards[game.opponent].remainingShips()
-  );
-  game.winner ? renderGameOver(game.players[game.current].name) : null;
+const renderTurn = (coord, attack) => {
+  renderAttack(coord, attack);
+  updateShipsRemain();
+  game.winner ? renderGameOver() : null;
 };
 
 const playAndRenderHumanTurn = (e) => {
   let coord = processCoords(e);
   if (game.players[game.current].alreadyGuessed(coord)) return;
   let attack = game.playRound(coord);
-  renderPlayerTurn(coord, attack);
+  renderTurn(coord, attack);
   if (attack === "miss") {
     game.switchPlayers();
   }
@@ -102,7 +92,7 @@ const playAndRenderComputerTurn = () => {
   while (attack != "miss") {
     let coord = game.players[1].makeGuess();
     attack = game.playRound(coord);
-    renderPlayerTurn(coord, attack);
+    renderTurn(coord, attack);
     if (attack === "miss") {
       game.switchPlayers();
     }
@@ -128,3 +118,5 @@ content.append(boards);
 
 renderShips("Player", game.gameBoards[game.current].ships);
 renderShips("Computer", game.gameBoards[game.opponent].ships);
+
+export { game };
