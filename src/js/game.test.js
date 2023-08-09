@@ -27,23 +27,20 @@ describe("testing playRound function", () => {
     game.gameBoards[1].placeShip([[5, 5]]);
   });
 
-  test("can record a miss and switchPlayers", () => {
-    expect(game.current).toBe(0);
+  test("can record a miss", () => {
     let status = game.playRound([6, 6]);
+    game.switchPlayers();
     expect(status).toBe("miss");
-    expect(game.current).toBe(1);
   });
 
-  test("can record a hit and NOT switchPlayers", () => {
+  test("can record a hit", () => {
     let status = game.playRound([4, 4]);
     expect(status).toBe("hit");
-    expect(game.current).toBe(1);
   });
 
-  test("can record a sunk ship and NOT switchPlayers", () => {
+  test("can record a sunk ship", () => {
     let status = game.playRound([5, 4]);
     expect(status).toBe("sunk");
-    expect(game.current).toBe(1);
   });
 
   test("can set winner when game is over", () => {

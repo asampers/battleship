@@ -68,6 +68,11 @@ const findTile = (player, position) => {
   return tile;
 };
 
+const previewShip = (coord) => {
+  let tile = findTile(game.players[game.current].name, coord);
+  tile.classList.toggle("occupied");
+};
+
 const setTileColor = (tile) => {
   tile.classList.remove("empty");
   tile.classList.add("occupied");
@@ -113,7 +118,7 @@ const renderBoard = (player, actionText, boardGame) => {
 
   const info = document.createElement("div");
   info.className = "info";
-  info.textContent = `Ships remaining: ${boardGame.ships.length}`;
+  info.textContent = `Ships placed: ${boardGame.ships.length}`;
 
   const result = document.createElement("div");
   result.className = "result";
@@ -134,4 +139,5 @@ export {
   renderAttack,
   updateShipsRemain,
   renderGameOver,
+  previewShip,
 };

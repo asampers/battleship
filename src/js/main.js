@@ -9,9 +9,11 @@ import {
   renderAttack,
   updateShipsRemain,
   renderGameOver,
+  previewShip,
 } from "./domManager";
 import Game from "./game";
 
+/*
 const player1Default = [
   [
     [1, 1],
@@ -25,39 +27,44 @@ const player1Default = [
     [6, 1],
   ],
 ];
+
 const player2Default = [
-  [
+ [
     [2, 6],
     [3, 6],
     [4, 6],
   ],
   [
-    [8, 4],
-    [7, 4],
-  ],
-  [
-    [5, 9],
-    [6, 9],
-    [7, 9],
-    [8, 9],
-  ],
+  [8, 4],
+  [7, 4],
+],
+[
+  [5, 9],
+  [6, 9],
+  [7, 9],
+  [8, 9],
+],
 ];
+*/
 
 const game = Game();
+
+/*
 player1Default.forEach((ship) => game.gameBoards[game.current].placeShip(ship));
 player2Default.forEach((ship) =>
   game.gameBoards[game.opponent].placeShip(ship)
 );
+*/
 
 const player1 = renderBoard(
   "Player",
-  "Computer guesses on this board",
+  "place ships on this board.",
   game.gameBoards[game.current]
 );
 
 const player2 = renderBoard(
   "Computer",
-  "Click on this board to sink their ships!",
+  "waiting for Player to place their ships!",
   game.gameBoards[game.opponent]
 );
 
@@ -99,6 +106,7 @@ const playAndRenderComputerTurn = () => {
   }
 };
 
+/*
 player1.addEventListener("click", (e) => {
   if (game.winner || game.current == 0) return;
   playAndRenderHumanTurn(e);
@@ -108,6 +116,16 @@ player2.addEventListener("click", (e) => {
   if (game.winner || game.current == 1) return;
   playAndRenderHumanTurn(e);
 });
+*/
+
+player1.addEventListener("mouseover", (e) => {
+  let coord = processCoords(e);
+  previewShip(coord);
+});
+player1.addEventListener("mouseout", (e) => {
+  let coord = processCoords(e);
+  previewShip(coord);
+});
 
 const boards = document.createElement("div");
 boards.className = "d-flex";
@@ -116,7 +134,7 @@ boards.append(player1, player2);
 const content = document.querySelector(".container");
 content.append(boards);
 
-renderShips("Player", game.gameBoards[game.current].ships);
-renderShips("Computer", game.gameBoards[game.opponent].ships);
+//renderShips("Player", game.gameBoards[game.current].ships);
+//renderShips("Computer", game.gameBoards[game.opponent].ships);
 
 export { game };
