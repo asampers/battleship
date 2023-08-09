@@ -93,6 +93,7 @@ player1.addEventListener("click", (e) => {
 player2.addEventListener("click", (e) => {
   if (game.winner || game.current == 1) return;
   let coord = processCoords(e);
+  if (game.players[game.current].alreadyGuessed(coord)) return;
   let attack = game.playRound(coord);
   renderPlayerTurn(1, 0, coord, attack);
 

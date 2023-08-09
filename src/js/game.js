@@ -20,6 +20,7 @@ export default () => {
     },
     takeTurn(guess) {
       let coord = this.players[this.current].makeGuess(guess);
+      this.players[this.current].addGuess(coord);
       return this.gameBoards[this.opponent].receiveAttack(coord);
     },
     playRound(guess) {
