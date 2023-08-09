@@ -25,9 +25,6 @@ export default () => {
     },
     playRound(guess) {
       let status = this.takeTurn(guess);
-      if (status === "miss") {
-        this.switchPlayers();
-      }
       if (status == "sunk" && this.over()) {
         this.winner = true;
       }
