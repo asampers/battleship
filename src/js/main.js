@@ -158,6 +158,21 @@ const placeShipsInit = () => {
       `.${game.players[game.current].name} .info`
     );
     info.textContent = `Ships placed: ${ships.length} of 5`;
+
+    if (ShipYard.shipLengths.length == 0) {
+      let playBtn = document.querySelector(".play");
+      playBtn.className = "play btn btn-primary";
+
+      let actionNode = document.querySelector(".Player .action");
+      actionNode.textContent = "All ships placed. Waiting for Computer!";
+      const board = document.createElement("div");
+      board.className = "board grid container";
+      renderBoardTiles(board);
+      const player1Board = document.querySelector(".Player .board");
+      player1Board.parentNode.replaceChild(board, player1Board);
+      let ships = game.gameBoards[game.current].ships;
+      renderShips("Player", ships);
+    }
   });
 };
 
