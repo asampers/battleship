@@ -100,21 +100,22 @@ const cannotPlaceShip = (here) => {
 };
 
 const previewShip = (totalCoords) => {
-  if (validCoords(totalCoords)) {
-    totalCoords.forEach((coord) => {
-      renderShipPreview(coord, "preview");
-    });
-  } else {
+  if (cannotPlaceShip(totalCoords)) {
     totalCoords.forEach((coord) => {
       if (isOnTheBoard(coord)) {
-        renderShipPreview(coord, "hit");
+        renderShipPreview(coord, "invalid");
       }
+    });
+  } else if (validCoords(totalCoords)) {
+    totalCoords.forEach((coord) => {
+      renderShipPreview(coord, "preview");
     });
   }
 };
 
 const setTileColor = (tile) => {
   tile.classList.remove("empty");
+  tile.classList.remove("preview");
   tile.classList.add("occupied");
 };
 
@@ -186,4 +187,5 @@ export {
   renderGameOver,
   previewShip,
   cannotPlaceShip,
+  renderBoardTiles,
 };

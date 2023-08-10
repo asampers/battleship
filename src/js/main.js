@@ -11,6 +11,7 @@ import {
   renderGameOver,
   previewShip,
   cannotPlaceShip,
+  renderBoardTiles,
 } from "./domManager";
 import Game from "./game";
 import { ShipYard } from "./shipYard";
@@ -127,41 +128,50 @@ boards.append(player1, player2);
 const content = document.querySelector(".container");
 content.append(boards);
 
-const player1Board = document.querySelector(".Player .board");
+const placeShipsInit = () => {
+  const player1Board = document.querySelector(".Player .board");
 
-player1Board.addEventListener("mouseover", (e) => {
-  let coord = processCoords(e);
-  let totalCoords = ShipYard.getTotalCoords(coord);
-  previewShip(totalCoords);
-});
+  player1Board.addEventListener("mouseover", (e) => {
+    let coord = processCoords(e);
+    let totalCoords = ShipYard.getTotalCoords(coord);
+    previewShip(totalCoords);
+    let ships = game.gameBoards[game.current].ships;
+    renderShips("Player", ships);
+  });
 
-player1Board.addEventListener("mouseout", (e) => {
-  let coord = processCoords(e);
-  let totalCoords = ShipYard.getTotalCoords(coord);
-  previewShip(totalCoords);
-});
+  player1Board.addEventListener("mouseout", (e) => {
+    let coord = processCoords(e);
+    let totalCoords = ShipYard.getTotalCoords(coord);
+    previewShip(totalCoords);
+  });
 
-player1Board.addEventListener("click", (e) => {
-  let coord = processCoords(e);
-  let totalCoords = ShipYard.getTotalCoords(coord);
-  if (cannotPlaceShip(totalCoords)) return;
+  player1Board.addEventListener("click", (e) => {
+    let coord = processCoords(e);
+    let totalCoords = ShipYard.getTotalCoords(coord);
+    if (cannotPlaceShip(totalCoords)) return;
 
-  game.gameBoards[game.current].placeShip(totalCoords);
-  let ships = game.gameBoards[game.current].ships;
-  ShipYard.launchShip();
-  renderShips("Player", ships);
+    game.gameBoards[game.current].placeShip(totalCoords);
+    let ships = game.gameBoards[game.current].ships;
+    ShipYard.launchShip();
 
-  const info = document.querySelector(
-    `.${game.players[game.current].name} .info`
-  );
-  info.textContent = `Ships placed: ${ships.length} of 5`;
-});
+    const info = document.querySelector(
+      `.${game.players[game.current].name} .info`
+    );
+    info.textContent = `Ships placed: ${ships.length} of 5`;
+  });
+};
+
+placeShipsInit();
 
 window.addEventListener("keydown", (e) => {
-  console.log(e.key);
-
   if (e.key == "r") {
     ShipYard.changeOrientation();
+    const board = document.createElement("div");
+    board.className = "board grid container";
+    renderBoardTiles(board);
+    const player1Board = document.querySelector(".Player .board");
+    player1Board.parentNode.replaceChild(board, player1Board);
+    placeShipsInit();
   }
 });
 
