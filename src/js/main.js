@@ -12,6 +12,7 @@ import {
   previewShip,
 } from "./domManager";
 import Game from "./game";
+import { ShipYard } from "./shipYard";
 
 /*
 const player1Default = [
@@ -118,21 +119,24 @@ player2.addEventListener("click", (e) => {
 });
 */
 
-player1.addEventListener("mouseover", (e) => {
-  let coord = processCoords(e);
-  previewShip(coord);
-});
-player1.addEventListener("mouseout", (e) => {
-  let coord = processCoords(e);
-  previewShip(coord);
-});
-
 const boards = document.createElement("div");
 boards.className = "d-flex";
 boards.append(player1, player2);
 
 const content = document.querySelector(".container");
 content.append(boards);
+
+player1.addEventListener("mouseover", (e) => {
+  let coord = processCoords(e);
+  let totalCoords = ShipYard.getTotalCoords(coord);
+  previewShip(totalCoords);
+});
+
+player1.addEventListener("mouseout", (e) => {
+  let coord = processCoords(e);
+  let totalCoords = ShipYard.getTotalCoords(coord);
+  previewShip(totalCoords);
+});
 
 //renderShips("Player", game.gameBoards[game.current].ships);
 //renderShips("Computer", game.gameBoards[game.opponent].ships);

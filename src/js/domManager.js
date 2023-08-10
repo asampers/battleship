@@ -68,9 +68,29 @@ const findTile = (player, position) => {
   return tile;
 };
 
-const previewShip = (coord) => {
+const isOnTheBoard = (coord) => {
   let tile = findTile(game.players[game.current].name, coord);
-  tile.classList.toggle("occupied");
+  return tile;
+};
+
+const validCoords = (totalCoords) => {
+  return totalCoords.every(isOnTheBoard);
+};
+
+const previewShip = (totalCoords) => {
+  if (validCoords(totalCoords)) {
+    totalCoords.forEach((coord) => {
+      let tile = findTile(game.players[game.current].name, coord);
+      tile.classList.toggle("occupied");
+    });
+  } else {
+    totalCoords.forEach((coord) => {
+      if (isOnTheBoard(coord)) {
+        let tile = findTile(game.players[game.current].name, coord);
+        tile.classList.toggle("hit");
+      }
+    });
+  }
 };
 
 const setTileColor = (tile) => {
