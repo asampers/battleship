@@ -73,8 +73,30 @@ const isOnTheBoard = (coord) => {
   return tile;
 };
 
+const arraysAreEqual = (a, b) => {
+  return JSON.stringify(a) === JSON.stringify(b);
+};
+
 const validCoords = (totalCoords) => {
   return totalCoords.every(isOnTheBoard);
+};
+
+const overlappingShips = (totalCoords) => {
+  let overlap = null;
+  totalCoords.forEach((coord) => {
+    game.gameBoards[game.current].ships.forEach((ship) => {
+      ship.coordinates.forEach((position) => {
+        if (arraysAreEqual(position, coord)) {
+          overlap = true;
+        }
+      });
+    });
+  });
+  return overlap;
+};
+
+const cannotPlaceShip = (here) => {
+  return overlappingShips(here) || !validCoords(here);
 };
 
 const previewShip = (totalCoords) => {
@@ -163,4 +185,5 @@ export {
   updateShipsRemain,
   renderGameOver,
   previewShip,
+  cannotPlaceShip,
 };

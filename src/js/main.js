@@ -10,6 +10,7 @@ import {
   updateShipsRemain,
   renderGameOver,
   previewShip,
+  cannotPlaceShip,
 } from "./domManager";
 import Game from "./game";
 import { ShipYard } from "./shipYard";
@@ -143,6 +144,8 @@ player1Board.addEventListener("mouseout", (e) => {
 player1Board.addEventListener("click", (e) => {
   let coord = processCoords(e);
   let totalCoords = ShipYard.getTotalCoords(coord);
+  if (cannotPlaceShip(totalCoords)) return;
+
   game.gameBoards[game.current].placeShip(totalCoords);
   let ships = game.gameBoards[game.current].ships;
   ShipYard.launchShip();
