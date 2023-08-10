@@ -126,16 +126,40 @@ boards.append(player1, player2);
 const content = document.querySelector(".container");
 content.append(boards);
 
-player1.addEventListener("mouseover", (e) => {
+const player1Board = document.querySelector(".Player .board");
+
+player1Board.addEventListener("mouseover", (e) => {
   let coord = processCoords(e);
   let totalCoords = ShipYard.getTotalCoords(coord);
   previewShip(totalCoords);
 });
 
-player1.addEventListener("mouseout", (e) => {
+player1Board.addEventListener("mouseout", (e) => {
   let coord = processCoords(e);
   let totalCoords = ShipYard.getTotalCoords(coord);
   previewShip(totalCoords);
+});
+
+player1Board.addEventListener("click", (e) => {
+  let coord = processCoords(e);
+  let totalCoords = ShipYard.getTotalCoords(coord);
+  game.gameBoards[game.current].placeShip(totalCoords);
+  let ships = game.gameBoards[game.current].ships;
+  ShipYard.launchShip();
+  renderShips("Player", ships);
+
+  const info = document.querySelector(
+    `.${game.players[game.current].name} .info`
+  );
+  info.textContent = `Ships placed: ${ships.length} of 5`;
+});
+
+window.addEventListener("keydown", (e) => {
+  console.log(e.key);
+
+  if (e.key == "r") {
+    ShipYard.changeOrientation();
+  }
 });
 
 //renderShips("Player", game.gameBoards[game.current].ships);

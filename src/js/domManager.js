@@ -80,14 +80,12 @@ const validCoords = (totalCoords) => {
 const previewShip = (totalCoords) => {
   if (validCoords(totalCoords)) {
     totalCoords.forEach((coord) => {
-      let tile = findTile(game.players[game.current].name, coord);
-      tile.classList.toggle("occupied");
+      renderShipPreview(coord, "preview");
     });
   } else {
     totalCoords.forEach((coord) => {
       if (isOnTheBoard(coord)) {
-        let tile = findTile(game.players[game.current].name, coord);
-        tile.classList.toggle("hit");
+        renderShipPreview(coord, "hit");
       }
     });
   }
@@ -114,6 +112,11 @@ const renderShips = (player, gameShips) => {
       setTileColor(tile);
     });
   }
+};
+
+const renderShipPreview = (coord, status) => {
+  let tile = findTile(game.players[game.current].name, coord);
+  tile.classList.toggle(status);
 };
 
 const renderAttack = (coord, attack) => {
