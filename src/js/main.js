@@ -133,8 +133,6 @@ const placeShipsInit = () => {
     let coord = processCoords(e);
     let totalCoords = ShipYard.getTotalCoords(coord);
     previewShip(totalCoords);
-    let ships = game.gameBoards[game.current].ships;
-    renderShips("Player", ships);
   });
 
   player1Board.addEventListener("mouseout", (e) => {
@@ -159,9 +157,8 @@ const placeShipsInit = () => {
 
     if (ShipYard.allShipsPlaced()) {
       renderGameReady();
-      let ships = game.gameBoards[game.current].ships;
-      renderShips("Player", ships);
     }
+    renderShips("Player", ships);
   });
 };
 
@@ -172,6 +169,8 @@ window.addEventListener("keydown", (e) => {
     ShipYard.changeOrientation();
     replaceBoard();
     placeShipsInit();
+    let ships = game.gameBoards[game.current].ships;
+    renderShips("Player", ships);
   }
 });
 
