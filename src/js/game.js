@@ -8,6 +8,15 @@ export default () => {
     current: 0,
     opponent: 1,
     winner: false,
+    playerShips() {
+      return this.gameBoards[this.current].ships;
+    },
+    playerName() {
+      return this.players[this.current].name;
+    },
+    opponentName() {
+      return this.players[this.opponent].name;
+    },
     playingAgainstComputer() {
       return this.players[1].name === "Computer";
     },

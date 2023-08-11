@@ -106,12 +106,10 @@ const placeShipsInit = () => {
     if (cannotPlaceShip(totalCoords)) return;
 
     game.gameBoards[game.current].placeShip(totalCoords);
-    let ships = game.gameBoards[game.current].ships;
+    let ships = game.playerShips();
     ShipYard.launchShip();
 
-    const info = document.querySelector(
-      `.${game.players[game.current].name} .info`
-    );
+    const info = document.querySelector(`.${game.playerName()} .info`);
     info.textContent = `Ships placed: ${ships.length} of 5`;
 
     if (ShipYard.allShipsPlaced()) {
@@ -128,12 +126,8 @@ window.addEventListener("keydown", (e) => {
     ShipYard.changeOrientation();
     replaceBoard();
     placeShipsInit();
-    let ships = game.gameBoards[game.current].ships;
-    renderShips("Player", ships);
+    renderShips("Player", game.playerShips());
   }
 });
-
-//renderShips("Player", game.gameBoards[game.current].ships);
-//renderShips("Computer", game.gameBoards[game.opponent].ships);
 
 export { game };

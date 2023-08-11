@@ -17,7 +17,7 @@ const renderGameOver = () => {
   let playAgain = document.querySelector(".play");
 
   for (const node of resultNodes) {
-    node.textContent = `${game.players[game.current].name} won!`;
+    node.textContent = `${game.playerName()} won!`;
   }
 
   for (const node of actionNodes) {
@@ -51,7 +51,7 @@ const renderGameReady = () => {
 };
 
 const updateShipsRemain = () => {
-  let player = game.players[game.opponent].name;
+  let player = game.opponentName();
   let ships = game.gameBoards[game.opponent].remainingShips();
   const info = document.querySelector(`.${player} .info`);
   info.textContent = `Ships remaining: ${ships}`;
@@ -89,7 +89,7 @@ const findTile = (player, position) => {
 };
 
 const isOnTheBoard = (coord) => {
-  let tile = findTile(game.players[game.current].name, coord);
+  let tile = findTile(game.playerName(), coord);
   return tile;
 };
 
@@ -104,7 +104,7 @@ const validCoords = (totalCoords) => {
 const overlappingShips = (totalCoords) => {
   let overlap = null;
   totalCoords.forEach((coord) => {
-    game.gameBoards[game.current].ships.forEach((ship) => {
+    game.playerShips().forEach((ship) => {
       ship.coordinates.forEach((position) => {
         if (arraysAreEqual(position, coord)) {
           overlap = true;
@@ -158,13 +158,13 @@ const renderShips = (player, gameShips) => {
 };
 
 const renderShipPreview = (coord, status) => {
-  let tile = findTile(game.players[game.current].name, coord);
+  let tile = findTile(game.playerName(), coord);
   tile.classList.toggle(status);
 };
 
 const renderAttack = (coord, attack) => {
-  let thisBoard = game.players[game.opponent].name;
-  let thisPlayer = game.players[game.current].name;
+  let thisBoard = game.opponentName();
+  let thisPlayer = game.playerName();
   let tile = findTile(thisBoard, coord);
 
   setTileStatus(tile, attack);
