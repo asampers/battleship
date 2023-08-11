@@ -89,9 +89,7 @@ const playAndRenderHumanTurn = (e) => {
   if (game.players[game.current].alreadyGuessed(coord)) return;
   let attack = game.playRound(coord);
   renderTurn(coord, attack);
-  if (attack === "miss") {
-    game.switchPlayers();
-  }
+  game.switchPlayersIfNeeded(attack);
   if (game.playingAgainstComputer() && attack == "miss") {
     playAndRenderComputerTurn();
   }
@@ -103,9 +101,7 @@ const playAndRenderComputerTurn = () => {
     let coord = game.players[1].makeGuess();
     attack = game.playRound(coord);
     renderTurn(coord, attack);
-    if (attack === "miss") {
-      game.switchPlayers();
-    }
+    game.switchPlayersIfNeeded(attack);
   }
 };
 

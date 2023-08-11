@@ -15,6 +15,11 @@ export default () => {
       this.current = this.current === 0 ? 1 : 0;
       this.opponent = this.opponent === 0 ? 1 : 0;
     },
+    switchPlayersIfNeeded(attack) {
+      if (attack === "miss") {
+        this.switchPlayers();
+      }
+    },
     over() {
       return this.gameBoards[this.opponent].allShipsSunk();
     },
