@@ -6,9 +6,17 @@ import { cannotPlaceShip, renderShips } from "./domManager";
 const computer = player("Computer");
 const shipyard = shipYard();
 
+const randomlyChangeOrientation = () => {
+  let roll = Math.floor(Math.random() * 11);
+  if (roll <= 5) {
+    shipyard.changeOrientation();
+  }
+};
+
 const getValidShipPlacement = () => {
   let totalCoords = shipyard.getTotalCoords(computer.newRandomGuess());
   while (cannotPlaceShip(totalCoords)) {
+    randomlyChangeOrientation();
     totalCoords = shipyard.getTotalCoords(computer.newRandomGuess());
   }
   for (const coord of totalCoords) {
