@@ -130,14 +130,12 @@ const placeShipsInit = () => {
   const player1Board = document.querySelector(".Player .board");
 
   player1Board.addEventListener("mouseover", (e) => {
-    let coord = processCoords(e);
-    let totalCoords = ShipYard.getTotalCoords(coord);
+    let totalCoords = ShipYard.getTotalCoords(e);
     previewShip(totalCoords);
   });
 
   player1Board.addEventListener("mouseout", (e) => {
-    let coord = processCoords(e);
-    let totalCoords = ShipYard.getTotalCoords(coord);
+    let totalCoords = ShipYard.getTotalCoords(e);
     previewShip(totalCoords);
   });
 

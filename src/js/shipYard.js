@@ -1,3 +1,10 @@
+function processCoords(e) {
+  return [
+    Number(e.target.getAttribute("data-x")),
+    Number(e.target.getAttribute("data-y")),
+  ];
+}
+
 const ShipYard = {
   shipLengths: [5, 4, 3, 3, 2],
   orientation: "h",
@@ -11,7 +18,8 @@ const ShipYard = {
       return [position[0] + 1, position[1]];
     }
   },
-  getTotalCoords(coord) {
+  getTotalCoords(e) {
+    let coord = processCoords(e);
     let totalCoords = [coord];
     for (let i = 0; i < this.shipLengths[0] - 1; i++) {
       totalCoords.push(this.nextPosition(totalCoords[i]));
