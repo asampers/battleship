@@ -92,7 +92,7 @@ const playAndRenderHumanTurn = (e) => {
   let attack = game.playRound(coord);
   renderTurn(coord, attack);
   game.switchPlayersIfNeeded(attack);
-  if (game.playingAgainstComputer() && attack == "miss") {
+  if (game.playingAgainstComputer() && game.isComputersTurn()) {
     playAndRenderComputerTurn();
   }
 };
@@ -129,16 +129,19 @@ content.append(boards);
 const placeShipsInit = () => {
   const player1Board = document.querySelector(".Player .board");
 
+  //preview ship placement when mouse enters tile
   player1Board.addEventListener("mouseover", (e) => {
     let totalCoords = ShipYard.getTotalCoords(e);
     previewShip(totalCoords);
   });
 
+  //clear ship preview when mouse leaves tile
   player1Board.addEventListener("mouseout", (e) => {
     let totalCoords = ShipYard.getTotalCoords(e);
     previewShip(totalCoords);
   });
 
+  //place ship (if possible) onClick
   player1Board.addEventListener("click", (e) => {
     let totalCoords = ShipYard.getTotalCoords(e);
     if (cannotPlaceShip(totalCoords)) return;

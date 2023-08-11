@@ -11,6 +11,9 @@ export default () => {
     playingAgainstComputer() {
       return this.players[1].name === "Computer";
     },
+    isComputersTurn() {
+      return this.players[this.current].name === "Computer";
+    },
     switchPlayers() {
       this.current = this.current === 0 ? 1 : 0;
       this.opponent = this.opponent === 0 ? 1 : 0;
