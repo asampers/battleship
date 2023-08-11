@@ -5,6 +5,10 @@ function processCoords(e) {
   ];
 }
 
+function playerIsHuman(e) {
+  return ["click", "mouseover", "mouseout"].includes(e.type);
+}
+
 const ShipYard = {
   shipLengths: [5, 4, 3, 3, 2],
   orientation: "h",
@@ -19,7 +23,7 @@ const ShipYard = {
     }
   },
   getTotalCoords(e) {
-    let coord = processCoords(e);
+    let coord = playerIsHuman(e) ? processCoords(e) : e;
     let totalCoords = [coord];
     for (let i = 0; i < this.shipLengths[0] - 1; i++) {
       totalCoords.push(this.nextPosition(totalCoords[i]));
