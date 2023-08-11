@@ -16,7 +16,8 @@ import {
   replaceBoard,
 } from "./domManager";
 import Game from "./game";
-import { ShipYard } from "./shipYard";
+import { shipYard } from "./shipYard";
+import { randomlyPlaceShips } from "./computerPlayer";
 
 const game = Game();
 
@@ -85,6 +86,8 @@ boards.append(player1, player2);
 const content = document.querySelector(".container");
 content.append(boards);
 
+const ShipYard = shipYard();
+
 const placeShipsInit = () => {
   const player1Board = document.querySelector(".Player .board");
 
@@ -114,6 +117,9 @@ const placeShipsInit = () => {
 
     if (ShipYard.allShipsPlaced()) {
       renderGameReady();
+      game.switchPlayers();
+      randomlyPlaceShips();
+      game.switchPlayers();
     }
     renderShips("Player", ships);
   });
