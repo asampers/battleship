@@ -140,8 +140,7 @@ const placeShipsInit = () => {
   });
 
   player1Board.addEventListener("click", (e) => {
-    let coord = processCoords(e);
-    let totalCoords = ShipYard.getTotalCoords(coord);
+    let totalCoords = ShipYard.getTotalCoords(e);
     if (cannotPlaceShip(totalCoords)) return;
 
     game.gameBoards[game.current].placeShip(totalCoords);
