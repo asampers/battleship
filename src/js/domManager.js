@@ -30,6 +30,26 @@ const renderGameOver = () => {
   });
 };
 
+const activatePlayBtn = () => {
+  let playBtn = document.querySelector(".play");
+  playBtn.className = "play btn btn-primary";
+};
+
+const replaceBoard = () => {
+  const board = document.createElement("div");
+  board.className = "board grid container";
+  renderBoardTiles(board);
+  const player1Board = document.querySelector(".Player .board");
+  player1Board.parentNode.replaceChild(board, player1Board);
+};
+
+const renderGameReady = () => {
+  let actionNode = document.querySelector(".Player .action");
+  actionNode.textContent = "All ships placed. Waiting for Computer!";
+  activatePlayBtn();
+  replaceBoard();
+};
+
 const updateShipsRemain = () => {
   let player = game.players[game.opponent].name;
   let ships = game.gameBoards[game.opponent].remainingShips();
@@ -188,4 +208,6 @@ export {
   previewShip,
   cannotPlaceShip,
   renderBoardTiles,
+  renderGameReady,
+  replaceBoard,
 };

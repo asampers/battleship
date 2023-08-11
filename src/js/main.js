@@ -12,6 +12,8 @@ import {
   previewShip,
   cannotPlaceShip,
   renderBoardTiles,
+  renderGameReady,
+  replaceBoard,
 } from "./domManager";
 import Game from "./game";
 import { ShipYard } from "./shipYard";
@@ -155,17 +157,8 @@ const placeShipsInit = () => {
     );
     info.textContent = `Ships placed: ${ships.length} of 5`;
 
-    if (ShipYard.shipLengths.length == 0) {
-      let playBtn = document.querySelector(".play");
-      playBtn.className = "play btn btn-primary";
-
-      let actionNode = document.querySelector(".Player .action");
-      actionNode.textContent = "All ships placed. Waiting for Computer!";
-      const board = document.createElement("div");
-      board.className = "board grid container";
-      renderBoardTiles(board);
-      const player1Board = document.querySelector(".Player .board");
-      player1Board.parentNode.replaceChild(board, player1Board);
+    if (ShipYard.allShipsPlaced()) {
+      renderGameReady();
       let ships = game.gameBoards[game.current].ships;
       renderShips("Player", ships);
     }
@@ -177,11 +170,7 @@ placeShipsInit();
 window.addEventListener("keydown", (e) => {
   if (e.key == "r") {
     ShipYard.changeOrientation();
-    const board = document.createElement("div");
-    board.className = "board grid container";
-    renderBoardTiles(board);
-    const player1Board = document.querySelector(".Player .board");
-    player1Board.parentNode.replaceChild(board, player1Board);
+    replaceBoard();
     placeShipsInit();
   }
 });

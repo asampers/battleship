@@ -21,6 +21,9 @@ const ShipYard = {
   launchShip() {
     this.shipLengths.shift();
   },
+  allShipsPlaced() {
+    return this.shipLengths.length == 0;
+  },
 };
 
 export { ShipYard };
