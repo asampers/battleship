@@ -3,12 +3,7 @@ import "../scss/styles.scss";
 
 // Import all of Bootstrap's JS
 import * as bootstrap from "bootstrap";
-import {
-  renderBoard,
-  renderAttack,
-  updateElementText,
-  renderGameOver,
-} from "./domManager";
+import { renderBoard } from "./domManager";
 import Game from "./game";
 import {
   previewShipListener,
@@ -29,55 +24,6 @@ const player2 = renderBoard(
   "waiting for Player to place their ships!",
   game.gameBoards[game.opponent]
 );
-
-function processCoords(e) {
-  return [
-    Number(e.target.getAttribute("data-x")),
-    Number(e.target.getAttribute("data-y")),
-  ];
-}
-
-const renderTurn = (coord, attack) => {
-  let player = game.opponentName();
-  let ships = game.gameBoards[game.opponent].remainingShips();
-  renderAttack(coord, attack);
-  updateElementText(`${player} .info`, `Ships remaining: ${ships}`);
-
-  game.winner ? renderGameOver() : null;
-};
-
-const playAndRenderHumanTurn = (e) => {
-  let coord = processCoords(e);
-  if (game.players[game.current].alreadyGuessed(coord)) return;
-  let attack = game.playRound(coord);
-  renderTurn(coord, attack);
-  game.switchPlayersIfNeeded(attack);
-  if (game.playingAgainstComputer() && game.isComputersTurn()) {
-    playAndRenderComputerTurn();
-  }
-};
-
-const playAndRenderComputerTurn = () => {
-  let attack;
-  while (attack != "miss") {
-    let coord = game.players[1].makeGuess();
-    attack = game.playRound(coord);
-    renderTurn(coord, attack);
-    game.switchPlayersIfNeeded(attack);
-  }
-};
-
-/*
-player1.addEventListener("click", (e) => {
-  if (game.winner || game.current == 0) return;
-  playAndRenderHumanTurn(e);
-});
-
-player2.addEventListener("click", (e) => {
-  if (game.winner || game.current == 1) return;
-  playAndRenderHumanTurn(e);
-});
-*/
 
 const boards = document.createElement("div");
 boards.className = "d-flex";

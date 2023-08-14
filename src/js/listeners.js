@@ -5,12 +5,34 @@ import {
   renderPlayerReady,
   replaceBoard,
   updateElementText,
+  createDomElement,
+  renderAttack,
+  renderGameReady,
+  renderGameOver,
 } from "./domManager";
 import { letComputerPlaceShips } from "./computerPlayer";
 import { shipYard } from "./shipYard";
 import { game, placeShipsInit } from "./main";
 
 const ShipYard = shipYard();
+
+function processCoords(e) {
+  return [
+    Number(e.target.getAttribute("data-x")),
+    Number(e.target.getAttribute("data-y")),
+  ];
+}
+
+function activatePlayBtn() {
+  let playBtn = createDomElement(
+    "button",
+    "play btn btn-success",
+    "Click here to start!"
+  );
+  let instructions = document.querySelector(".instructions");
+  instructions.append(playBtn);
+  playBtn.addEventListener("click", renderGameReady);
+}
 
 function rKeyListenter(e) {
   if (e.key == "r") {
@@ -42,8 +64,44 @@ function placeShipListener(e) {
     window.removeEventListener("keydown", rKeyListenter);
     game.switchPlayers();
     letComputerPlaceShips();
+    setTimeout(activatePlayBtn, 3000);
   }
   renderShips("Player", ships);
 }
 
-export { previewShipListener, placeShipListener, rKeyListenter };
+const renderTurn = (coord, attack) => {
+  let player = game.opponentName();
+  let ships = game.gameBoards[game.opponent].remainingShips();
+  renderAttack(coord, attack);
+  updateElementText(`.${player} .info`, `Ships remaining: ${ships}`);
+
+  game.winner ? renderGameOver() : null;
+};
+
+const playAndRenderHumanTurn = (e) => {
+  let coord = processCoords(e);
+  if (game.players[game.current].alreadyGuessed(coord)) return;
+  let attack = game.playRound(coord);
+  renderTurn(coord, attack);
+  game.switchPlayersIfNeeded(attack);
+  if (game.playingAgainstComputer() && game.isComputersTurn()) {
+    playAndRenderComputerTurn();
+  }
+};
+
+const playAndRenderComputerTurn = () => {
+  let attack;
+  while (attack != "miss") {
+    let coord = game.players[1].makeGuess();
+    attack = game.playRound(coord);
+    renderTurn(coord, attack);
+    game.switchPlayersIfNeeded(attack);
+  }
+};
+
+export {
+  previewShipListener,
+  placeShipListener,
+  rKeyListenter,
+  playAndRenderHumanTurn,
+};

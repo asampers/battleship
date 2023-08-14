@@ -38,11 +38,15 @@ const randomlyPlaceShips = () => {
     shipyard.launchShip();
   }
   updateElementText(`.${game.playerName()} .action`, message("placed"));
+  updateElementText(
+    `.${game.playerName()} .info`,
+    `Ships placed: ${game.playerShips().length} of 5`
+  );
   renderShips(game.playerName(), game.playerShips());
   game.switchPlayers();
 };
 
-const letComputerPlaceShips = () => {
+const letComputerPlaceShips = async () => {
   updateElementText(`.${game.playerName()} .action`, "...is placing ships...");
   let actionNode = document.querySelector(".Computer .action");
   let spinner = createDomElement(

@@ -1,4 +1,5 @@
 import { game } from "./main";
+import { playAndRenderHumanTurn } from "./listeners";
 
 function message(attack) {
   switch (attack) {
@@ -21,7 +22,6 @@ const renderGameOver = () => {
   let resultNodes = document.querySelectorAll(".result");
   let actionNodes = document.querySelectorAll(".action");
   let playAgain = document.querySelector(".play");
-
   for (const node of resultNodes) {
     node.textContent = message("won");
   }
@@ -30,17 +30,36 @@ const renderGameOver = () => {
     node.textContent = message("over");
   }
 
-  playAgain.textContent = "Reset";
+  updateElementText(".play", "Reset");
+  playAgain.className = "play btn btn-primary";
   playAgain.addEventListener("click", () => {
     window.location.reload();
   });
 };
 
-const renderGameReady = () => {};
-
-const activatePlayBtn = () => {
+const renderGameReady = () => {
+  let infoNodes = document.querySelectorAll(".info");
+  let actionNodes = document.querySelectorAll(".action");
   let playBtn = document.querySelector(".play");
-  playBtn.className = "play btn btn-primary";
+  let player0 = document.querySelector(`.${game.playerName()}`);
+  let player1 = document.querySelector(`.${game.opponentName()}`);
+  playBtn.className = "play d-none";
+  for (const node of infoNodes) {
+    node.textContent = "Ships remaining: 5";
+  }
+
+  actionNodes[0].textContent = `${game.opponentName()} guesses on this board.`;
+  actionNodes[1].textContent = "Click on this board to sink their ships.";
+
+  player0.addEventListener("click", (e) => {
+    if (game.winner || game.current == 0) return;
+    playAndRenderHumanTurn(e);
+  });
+
+  player1.addEventListener("click", (e) => {
+    if (game.winner || game.current == 1) return;
+    playAndRenderHumanTurn(e);
+  });
 };
 
 const replaceBoard = () => {
@@ -210,6 +229,7 @@ export {
   updateElementText,
   createDomElement,
   renderGameOver,
+  renderGameReady,
   previewShip,
   cannotPlaceShip,
   renderBoardTiles,
