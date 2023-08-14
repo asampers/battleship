@@ -6,7 +6,7 @@ import * as bootstrap from "bootstrap";
 import {
   renderBoard,
   renderAttack,
-  updateShipsRemain,
+  updateElementText,
   renderGameOver,
 } from "./domManager";
 import Game from "./game";
@@ -38,8 +38,11 @@ function processCoords(e) {
 }
 
 const renderTurn = (coord, attack) => {
+  let player = game.opponentName();
+  let ships = game.gameBoards[game.opponent].remainingShips();
   renderAttack(coord, attack);
-  updateShipsRemain();
+  updateElementText(`${player} .info`, `Ships remaining: ${ships}`);
+
   game.winner ? renderGameOver() : null;
 };
 

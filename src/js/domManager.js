@@ -3,11 +3,17 @@ import { game } from "./main";
 function message(attack) {
   switch (attack) {
     case "miss":
-      return "took a shot and missed.";
+      return `${game.playerName()} took a shot and missed.`;
     case "hit":
-      return "hit a ship!";
+      return `${game.playerName()} hit a ship!`;
     case "sunk":
-      return "sunk a ship!";
+      return `${game.playerName()} sunk a ship!`;
+    case "won":
+      return `${game.playerName()} won!`;
+    case "over":
+      return "Game Over. Press RESET button to play again.";
+    case "placed":
+      return "All ships placed. Ready to Play!";
   }
 }
 
@@ -17,11 +23,11 @@ const renderGameOver = () => {
   let playAgain = document.querySelector(".play");
 
   for (const node of resultNodes) {
-    node.textContent = `${game.playerName()} won!`;
+    node.textContent = message("won");
   }
 
   for (const node of actionNodes) {
-    node.textContent = "Game Over. Press RESET button to play again.";
+    node.textContent = message("over");
   }
 
   playAgain.textContent = "Reset";
@@ -43,17 +49,21 @@ const replaceBoard = () => {
   player1Board.parentNode.replaceChild(board, player1Board);
 };
 
-const renderPlayerReady = () => {
-  let actionNode = document.querySelector(`.${game.playerName()} .action`);
-  actionNode.textContent = "All ships placed. Ready to Play!";
-  replaceBoard();
+const createDomElement = (type, className, textContent) => {
+  const element = document.createElement(type);
+  element.className = className;
+  element.textContent = textContent;
+  return element;
 };
 
-const updateShipsRemain = () => {
-  let player = game.opponentName();
-  let ships = game.gameBoards[game.opponent].remainingShips();
-  const info = document.querySelector(`.${player} .info`);
-  info.textContent = `Ships remaining: ${ships}`;
+const updateElementText = (className, textContent) => {
+  let element = document.querySelector(className);
+  element.textContent = textContent;
+};
+
+const renderPlayerReady = () => {
+  updateElementText(`.${game.playerName()} .action`, message("placed"));
+  replaceBoard();
 };
 
 const renderBoardTiles = (board) => {
@@ -70,10 +80,13 @@ const renderRow = (x, board) => {
 };
 
 const renderTile = (x, y) => {
-  const tile = document.createElement("button");
+  const tile = createDomElement(
+    "button",
+    "tile border border-black rounded empty",
+    ""
+  );
   tile.setAttribute("data-x", x);
   tile.setAttribute("data-y", y);
-  tile.className = "tile border border-black rounded empty";
 
   return tile;
 };
@@ -142,11 +155,6 @@ const setTileStatus = (tile, tileStatus) => {
   tile.classList.add(tileStatus);
 };
 
-const setResultStatus = (player, attack) => {
-  let result = document.querySelector(`.${player} .result`);
-  result.textContent = `${player} ${message(attack)}`;
-};
-
 const renderShips = (player, gameShips) => {
   for (const ship of gameShips) {
     ship.coordinates.forEach((position) => {
@@ -167,30 +175,25 @@ const renderAttack = (coord, attack) => {
   let tile = findTile(thisBoard, coord);
 
   setTileStatus(tile, attack);
-  setResultStatus(thisPlayer, attack);
+  updateElementText(`.${thisPlayer} .result`, message(attack));
 };
 
 const renderBoard = (player, actionText, boardGame) => {
-  const display = document.createElement("div");
-  display.className = `${player} container d-flex flex-column align-items-center`;
+  const display = createDomElement(
+    "div",
+    `${player} container d-flex flex-column align-items-center`,
+    ""
+  );
+  const title = createDomElement("h1", "", player);
+  const action = createDomElement("div", "action", actionText);
+  const info = createDomElement(
+    "div",
+    "info",
+    `Ships placed: ${boardGame.ships.length}`
+  );
+  const result = createDomElement("div", "result", "No moves yet.");
+  const board = createDomElement("div", "board grid container", "");
 
-  const title = document.createElement("h1");
-  title.textContent = player;
-
-  const action = document.createElement("div");
-  action.className = "action";
-  action.textContent = actionText;
-
-  const info = document.createElement("div");
-  info.className = "info";
-  info.textContent = `Ships placed: ${boardGame.ships.length}`;
-
-  const result = document.createElement("div");
-  result.className = "result";
-  result.textContent = "No moves yet.";
-
-  const board = document.createElement("div");
-  board.className = "board grid container";
   renderBoardTiles(board);
 
   display.append(title, action, info, result, board);
@@ -202,7 +205,8 @@ export {
   renderBoard,
   renderShips,
   renderAttack,
-  updateShipsRemain,
+  updateElementText,
+  createDomElement,
   renderGameOver,
   previewShip,
   cannotPlaceShip,

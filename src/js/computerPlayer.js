@@ -36,6 +36,7 @@ const randomlyPlaceShips = () => {
   info.textContent = `Ships placed: ${game.playerShips().length} of 5`;
   actionNode.textContent = "All ships placed. Ready to Play!";
   renderShips(game.playerName(), game.playerShips());
+  game.switchPlayers();
 };
 
 export { randomlyPlaceShips };
