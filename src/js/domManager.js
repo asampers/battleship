@@ -36,6 +36,8 @@ const renderGameOver = () => {
   });
 };
 
+const renderGameReady = () => {};
+
 const activatePlayBtn = () => {
   let playBtn = document.querySelector(".play");
   playBtn.className = "play btn btn-primary";
@@ -213,4 +215,5 @@ export {
   renderBoardTiles,
   renderPlayerReady,
   replaceBoard,
+  message,
 };

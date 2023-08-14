@@ -5,9 +5,8 @@ import {
   renderPlayerReady,
   replaceBoard,
   updateElementText,
-  createDomElement,
 } from "./domManager";
-import { randomlyPlaceShips } from "./computerPlayer";
+import { letComputerPlaceShips } from "./computerPlayer";
 import { shipYard } from "./shipYard";
 import { game, placeShipsInit } from "./main";
 
@@ -38,28 +37,11 @@ function placeShipListener(e) {
     `Ships placed: ${game.playerShips().length} of 5`
   );
 
-  if (ShipYard.allShipsPlaced()) {
+  if (ShipYard.allShipsPlaced() && game.playingAgainstComputer()) {
     renderPlayerReady();
     window.removeEventListener("keydown", rKeyListenter);
     game.switchPlayers();
-    updateElementText(
-      `.${game.playerName()} .action`,
-      "...is placing ships..."
-    );
-    let actionNode = document.querySelector(".Computer .action");
-    let spinner = createDomElement(
-      "span",
-      "spinner-border text-secondary spinner-border-sm me-2",
-      ""
-    );
-    let spinner2 = createDomElement(
-      "span",
-      "spinner-border text-secondary spinner-border-sm me-2",
-      ""
-    );
-    actionNode.prepend(spinner);
-    actionNode.append(spinner2);
-    setTimeout(randomlyPlaceShips, 3000);
+    letComputerPlaceShips();
   }
   renderShips("Player", ships);
 }

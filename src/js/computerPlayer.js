@@ -1,7 +1,13 @@
 import player from "./player";
 import { shipYard } from "./shipYard";
 import { game } from "./main";
-import { cannotPlaceShip, renderShips, updateElementText } from "./domManager";
+import {
+  cannotPlaceShip,
+  renderShips,
+  updateElementText,
+  createDomElement,
+  message,
+} from "./domManager";
 
 const computer = player("Computer");
 const shipyard = shipYard();
@@ -31,13 +37,27 @@ const randomlyPlaceShips = () => {
     game.gameBoards[game.current].placeShip(totalCoords);
     shipyard.launchShip();
   }
-  updateElementText(
-    `.${game.playerName()} .action`,
-    "All ships placed. Ready to Play!"
-  );
-  updateElementText(`.${game.playerName()} .info`, `Ships placed: 5 of 5`);
+  updateElementText(`.${game.playerName()} .action`, message("placed"));
   renderShips(game.playerName(), game.playerShips());
   game.switchPlayers();
 };
 
-export { randomlyPlaceShips };
+const letComputerPlaceShips = () => {
+  updateElementText(`.${game.playerName()} .action`, "...is placing ships...");
+  let actionNode = document.querySelector(".Computer .action");
+  let spinner = createDomElement(
+    "span",
+    "spinner-border text-secondary spinner-border-sm me-2",
+    ""
+  );
+  let spinner2 = createDomElement(
+    "span",
+    "spinner-border text-secondary spinner-border-sm me-2",
+    ""
+  );
+  actionNode.prepend(spinner);
+  actionNode.append(spinner2);
+  setTimeout(randomlyPlaceShips, 3000);
+};
+
+export { letComputerPlaceShips };
