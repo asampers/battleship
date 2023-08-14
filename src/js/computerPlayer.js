@@ -1,7 +1,7 @@
 import player from "./player";
 import { shipYard } from "./shipYard";
 import { game } from "./main";
-import { cannotPlaceShip, renderShips } from "./domManager";
+import { cannotPlaceShip, renderShips, updateElementText } from "./domManager";
 
 const computer = player("Computer");
 const shipyard = shipYard();
@@ -31,10 +31,11 @@ const randomlyPlaceShips = () => {
     game.gameBoards[game.current].placeShip(totalCoords);
     shipyard.launchShip();
   }
-  const actionNode = document.querySelector(".Computer .action");
-  const info = document.querySelector(`.${game.playerName()} .info`);
-  info.textContent = `Ships placed: ${game.playerShips().length} of 5`;
-  actionNode.textContent = "All ships placed. Ready to Play!";
+  updateElementText(
+    `.${game.playerName()} .action`,
+    "All ships placed. Ready to Play!"
+  );
+  updateElementText(`.${game.playerName()} .info`, `Ships placed: 5 of 5`);
   renderShips(game.playerName(), game.playerShips());
   game.switchPlayers();
 };
