@@ -31,6 +31,10 @@ const randomlyPlaceShips = () => {
     game.gameBoards[game.current].placeShip(totalCoords);
     shipyard.launchShip();
   }
+  const actionNode = document.querySelector(".Computer .action");
+  const info = document.querySelector(`.${game.playerName()} .info`);
+  info.textContent = `Ships placed: ${game.playerShips().length} of 5`;
+  actionNode.textContent = "All ships placed. Ready to Play!";
   renderShips(game.playerName(), game.playerShips());
 };
 

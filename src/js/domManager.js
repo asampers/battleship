@@ -43,10 +43,9 @@ const replaceBoard = () => {
   player1Board.parentNode.replaceChild(board, player1Board);
 };
 
-const renderGameReady = () => {
-  let actionNode = document.querySelector(".Player .action");
-  actionNode.textContent = "All ships placed. Waiting for Computer!";
-  activatePlayBtn();
+const renderPlayerReady = () => {
+  let actionNode = document.querySelector(`.${game.playerName()} .action`);
+  actionNode.textContent = "All ships placed. Ready to Play!";
   replaceBoard();
 };
 
@@ -208,6 +207,6 @@ export {
   previewShip,
   cannotPlaceShip,
   renderBoardTiles,
-  renderGameReady,
+  renderPlayerReady,
   replaceBoard,
 };
