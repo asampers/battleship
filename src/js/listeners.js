@@ -30,6 +30,8 @@ function activatePlayBtn() {
     "Click here to start!"
   );
   let instructions = document.querySelector(".instructions");
+  instructions.innerHTML = `<span>Start sinking ships by clicking on coordinates on your opponent's board.<br>
+    Sink all 5 ships before your opponent to win!</span>`;
   instructions.append(playBtn);
   playBtn.addEventListener("click", renderGameReady);
 }

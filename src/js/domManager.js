@@ -30,8 +30,12 @@ const renderGameOver = () => {
     node.textContent = message("over");
   }
 
-  updateElementText(".play", "Reset");
+  updateElementText(
+    ".instructions span",
+    `Congratulations, ${game.playerName()}!`
+  );
   playAgain.className = "play btn btn-primary";
+  playAgain.textContent = "Reset";
   playAgain.addEventListener("click", () => {
     window.location.reload();
   });
@@ -44,6 +48,7 @@ const renderGameReady = () => {
   let player0 = document.querySelector(`.${game.playerName()}`);
   let player1 = document.querySelector(`.${game.opponentName()}`);
   playBtn.className = "play d-none";
+
   for (const node of infoNodes) {
     node.textContent = "Ships remaining: 5";
   }

@@ -3,7 +3,7 @@ import "../scss/styles.scss";
 
 // Import all of Bootstrap's JS
 import * as bootstrap from "bootstrap";
-import { renderBoard } from "./domManager";
+import { renderBoard, updateElementText } from "./domManager";
 import Game from "./game";
 import {
   previewShipListener,
@@ -24,6 +24,9 @@ const player2 = renderBoard(
   "waiting for Player to place their ships!",
   game.gameBoards[game.opponent]
 );
+let instructions = document.querySelector(".instructions");
+instructions.innerHTML = `<span>To place your ship, hover over your board and click on a coordinate. <br>
+  Press <b>r</b> to rotate your ship prior to placement.</span>`;
 
 const boards = document.createElement("div");
 boards.className = "d-flex";
