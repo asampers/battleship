@@ -26,13 +26,12 @@ const getValidShipPlacement = () => {
 };
 
 const randomlyPlaceShips = () => {
-  console.log(shipyard.allShipsPlaced());
   while (!shipyard.allShipsPlaced()) {
     let totalCoords = getValidShipPlacement();
     game.gameBoards[game.current].placeShip(totalCoords);
     shipyard.launchShip();
   }
-  renderShips("Computer", game.playerShips());
+  renderShips(game.playerName(), game.playerShips());
 };
 
 export { randomlyPlaceShips };

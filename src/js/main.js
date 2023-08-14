@@ -5,19 +5,16 @@ import "../scss/styles.scss";
 import * as bootstrap from "bootstrap";
 import {
   renderBoard,
-  renderShips,
   renderAttack,
   updateShipsRemain,
   renderGameOver,
-  previewShip,
-  cannotPlaceShip,
-  renderBoardTiles,
-  renderGameReady,
-  replaceBoard,
 } from "./domManager";
 import Game from "./game";
-import { shipYard } from "./shipYard";
-import { randomlyPlaceShips } from "./computerPlayer";
+import {
+  previewShipListener,
+  placeShipListener,
+  rKeyListenter,
+} from "./listeners";
 
 const game = Game();
 
@@ -86,54 +83,21 @@ boards.append(player1, player2);
 const content = document.querySelector(".container");
 content.append(boards);
 
-const ShipYard = shipYard();
-
 const placeShipsInit = () => {
   const player1Board = document.querySelector(".Player .board");
 
   //preview ship placement when mouse enters tile
-  player1Board.addEventListener("mouseover", (e) => {
-    let totalCoords = ShipYard.getTotalCoords(e);
-    previewShip(totalCoords);
-  });
+  player1Board.addEventListener("mouseover", previewShipListener);
 
   //clear ship preview when mouse leaves tile
-  player1Board.addEventListener("mouseout", (e) => {
-    let totalCoords = ShipYard.getTotalCoords(e);
-    previewShip(totalCoords);
-  });
+  player1Board.addEventListener("mouseout", previewShipListener);
 
   //place ship (if possible) onClick
-  player1Board.addEventListener("click", (e) => {
-    let totalCoords = ShipYard.getTotalCoords(e);
-    if (cannotPlaceShip(totalCoords)) return;
-
-    game.gameBoards[game.current].placeShip(totalCoords);
-    let ships = game.playerShips();
-    ShipYard.launchShip();
-
-    const info = document.querySelector(`.${game.playerName()} .info`);
-    info.textContent = `Ships placed: ${ships.length} of 5`;
-
-    if (ShipYard.allShipsPlaced()) {
-      renderGameReady();
-      game.switchPlayers();
-      randomlyPlaceShips();
-      game.switchPlayers();
-    }
-    renderShips("Player", ships);
-  });
+  player1Board.addEventListener("click", placeShipListener);
 };
 
 placeShipsInit();
 
-window.addEventListener("keydown", (e) => {
-  if (e.key == "r") {
-    ShipYard.changeOrientation();
-    replaceBoard();
-    placeShipsInit();
-    renderShips("Player", game.playerShips());
-  }
-});
+window.addEventListener("keydown", rKeyListenter);
 
-export { game };
+export { game, placeShipsInit };
