@@ -1,10 +1,4 @@
-import {
-  renderPlayerReady,
-  updateElementText,
-  createDomElement,
-  renderGameReady,
-  renderGameOver,
-} from "./dom4Game";
+import { DomGame, updateElementText, createDomElement } from "./dom4Game";
 import { replaceBoard } from "./dom4Board";
 import {
   renderShips,
@@ -14,7 +8,7 @@ import {
 } from "./dom4Ship";
 import { letComputerPlaceShips } from "./computerPlayer";
 import { shipYard } from "./shipYard";
-import { game, placeShipsInit } from "./main";
+import { game } from "./main";
 
 const ShipYard = shipYard();
 
@@ -35,7 +29,7 @@ function activatePlayBtn() {
   instructions.innerHTML = `<span>Start sinking ships by clicking on coordinates on your opponent's board.<br>
     Sink all 5 ships before your opponent to win!</span>`;
   instructions.append(playBtn);
-  playBtn.addEventListener("click", renderGameReady);
+  playBtn.addEventListener("click", DomGame.renderGameReady);
 }
 
 function rKeyListenter(e) {
@@ -64,7 +58,7 @@ function placeShipListener(e) {
   );
 
   if (ShipYard.allShipsPlaced() && game.playingAgainstComputer()) {
-    renderPlayerReady();
+    DomGame.renderPlayerReady();
     window.removeEventListener("keydown", rKeyListenter);
     game.switchPlayers();
     letComputerPlaceShips();
@@ -79,7 +73,7 @@ const renderTurn = (coord, attack) => {
   renderAttack(coord, attack);
   updateElementText(`.${player} .info`, `Ships remaining: ${ships}`);
 
-  game.winner ? renderGameOver() : null;
+  game.winner ? DomGame.renderGameOver() : null;
 };
 
 const playAndRenderHumanTurn = (e) => {
