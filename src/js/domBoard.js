@@ -1,4 +1,4 @@
-import { createDomElement } from "./dom4Game";
+import { createDomElement } from "./domGame";
 
 export const DomBoard = (() => {
   const renderRow = (x, board) => {

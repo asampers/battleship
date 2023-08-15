@@ -3,7 +3,7 @@ import "../scss/styles.scss";
 
 // Import all of Bootstrap's JS
 import * as bootstrap from "bootstrap";
-import { DomGame } from "./dom4Game";
+import { DomGame } from "./domGame";
 import Game from "./game";
 import { placeShipsHuman, rKeyListenter } from "./humanPlayer";
 

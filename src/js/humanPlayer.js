@@ -1,6 +1,6 @@
-import { DomGame, updateElementText, createDomElement } from "./dom4Game";
-import { DomBoard } from "./dom4Board";
-import { DomShip } from "./dom4Ship";
+import { DomGame, updateElementText, createDomElement } from "./domGame";
+import { DomBoard } from "./domBoard";
+import { DomShip } from "./domShip";
 import { letComputerPlaceShips } from "./computerPlayer";
 import { shipYard } from "./shipYard";
 import { game } from "./main";

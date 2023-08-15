@@ -1,4 +1,4 @@
-import { updateElementText, message } from "./dom4Game";
+import { updateElementText, message } from "./domGame";
 import { game } from "./main";
 
 export const DomShip = (() => {

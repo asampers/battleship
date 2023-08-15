@@ -1,6 +1,6 @@
 import { game } from "./main";
 import { playAndRenderHumanTurn } from "./humanPlayer";
-import { DomBoard } from "./dom4Board";
+import { DomBoard } from "./domBoard";
 
 function message(attack) {
   switch (attack) {

@@ -1,8 +1,8 @@
 import player from "./player";
 import { shipYard } from "./shipYard";
 import { game } from "./main";
-import { updateElementText, createDomElement, message } from "./dom4Game";
-import { DomShip } from "./dom4Ship";
+import { updateElementText, createDomElement, message } from "./domGame";
+import { DomShip } from "./domShip";
 
 const computer = player("Computer");
 const shipyard = shipYard();
