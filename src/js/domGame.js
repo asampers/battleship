@@ -24,13 +24,8 @@ const DomGame = (() => {
     let resultNodes = document.querySelectorAll(".result");
     let actionNodes = document.querySelectorAll(".action");
 
-    for (const node of resultNodes) {
-      node.textContent = message("won");
-    }
-
-    for (const node of actionNodes) {
-      node.textContent = message("over");
-    }
+    updateNodeText(resultNodes, message("won"));
+    updateNodeText(actionNodes, message("over"));
 
     updateElementText(
       ".instructions span",
@@ -51,13 +46,9 @@ const DomGame = (() => {
     instructions.innerHTML = `<span>Start sinking ships by clicking on coordinates on your opponent's board.<br>
     Sink all 5 ships before your opponent to win!</span>`;
     instructions.append(playBtn);
-    for (const node of infoNodes) {
-      node.textContent = "Ships remaining: 5";
-    }
 
-    for (const node of resultNodes) {
-      node.textContent = "No moves yet.";
-    }
+    updateNodeText(infoNodes, "Ships remaining: 5");
+    updateNodeText(resultNodes, "No moves yet.");
 
     actionNodes[0].textContent = `${game.opponentName()} guesses on this board.`;
     actionNodes[1].textContent = "Click on this board to sink their ships.";
@@ -120,6 +111,12 @@ const createDomElement = (type, className, textContent) => {
 const updateElementText = (className, textContent) => {
   let element = document.querySelector(className);
   element.textContent = textContent;
+};
+
+const updateNodeText = (nodeName, textContent) => {
+  for (const node of nodeName) {
+    node.textContent = textContent;
+  }
 };
 
 export { updateElementText, createDomElement, message, DomGame };
