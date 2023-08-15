@@ -3,13 +3,13 @@ import {
   previewShip,
   cannotPlaceShip,
   renderPlayerReady,
-  replaceBoard,
   updateElementText,
   createDomElement,
   renderAttack,
   renderGameReady,
   renderGameOver,
 } from "./domManager";
+import { replaceBoard } from "./dom4Board";
 import { letComputerPlaceShips } from "./computerPlayer";
 import { shipYard } from "./shipYard";
 import { game, placeShipsInit } from "./main";

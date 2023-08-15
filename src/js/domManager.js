@@ -12,7 +12,7 @@ function message(attack) {
     case "won":
       return `${game.playerName()} won!`;
     case "over":
-      return "Game Over. Press RESET button to play again.";
+      return "GAME OVER.";
     case "placed":
       return "All ships placed. Ready to Play!";
   }
@@ -67,14 +67,6 @@ const renderGameReady = () => {
   });
 };
 
-const replaceBoard = () => {
-  const board = document.createElement("div");
-  board.className = "board grid container";
-  renderBoardTiles(board);
-  const player1Board = document.querySelector(".Player .board");
-  player1Board.parentNode.replaceChild(board, player1Board);
-};
-
 const createDomElement = (type, className, textContent) => {
   const element = document.createElement(type);
   element.className = className;
@@ -90,31 +82,6 @@ const updateElementText = (className, textContent) => {
 const renderPlayerReady = () => {
   updateElementText(`.${game.playerName()} .action`, message("placed"));
   replaceBoard();
-};
-
-const renderBoardTiles = (board) => {
-  for (let x = 0; x < 10; x++) {
-    renderRow(x, board);
-  }
-};
-
-const renderRow = (x, board) => {
-  for (let y = 0; y < 10; y++) {
-    const tile = renderTile(x, y);
-    board.appendChild(tile);
-  }
-};
-
-const renderTile = (x, y) => {
-  const tile = createDomElement(
-    "button",
-    "tile border border-black rounded empty",
-    ""
-  );
-  tile.setAttribute("data-x", x);
-  tile.setAttribute("data-y", y);
-
-  return tile;
 };
 
 const findTile = (player, position) => {
@@ -204,31 +171,7 @@ const renderAttack = (coord, attack) => {
   updateElementText(`.${thisPlayer} .result`, message(attack));
 };
 
-const renderBoard = (player, actionText, boardGame) => {
-  const display = createDomElement(
-    "div",
-    `${player} container d-flex flex-column align-items-center`,
-    ""
-  );
-  const title = createDomElement("h1", "", player);
-  const action = createDomElement("div", "action", actionText);
-  const info = createDomElement(
-    "div",
-    "info",
-    `Ships placed: ${boardGame.ships.length}`
-  );
-  const result = createDomElement("div", "result", "No moves yet.");
-  const board = createDomElement("div", "board grid container", "");
-
-  renderBoardTiles(board);
-
-  display.append(title, action, info, result, board);
-
-  return display;
-};
-
 export {
-  renderBoard,
   renderShips,
   renderAttack,
   updateElementText,
@@ -237,8 +180,6 @@ export {
   renderGameReady,
   previewShip,
   cannotPlaceShip,
-  renderBoardTiles,
   renderPlayerReady,
-  replaceBoard,
   message,
 };

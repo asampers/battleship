@@ -3,7 +3,8 @@ import "../scss/styles.scss";
 
 // Import all of Bootstrap's JS
 import * as bootstrap from "bootstrap";
-import { renderBoard, updateElementText } from "./domManager";
+import {} from "./domManager";
+import { renderBoard } from "./dom4Board";
 import Game from "./game";
 import {
   previewShipListener,
