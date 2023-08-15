@@ -1,15 +1,17 @@
 import {
-  renderShips,
-  previewShip,
-  cannotPlaceShip,
   renderPlayerReady,
   updateElementText,
   createDomElement,
-  renderAttack,
   renderGameReady,
   renderGameOver,
 } from "./domManager";
 import { replaceBoard } from "./dom4Board";
+import {
+  renderShips,
+  previewShip,
+  cannotPlaceShip,
+  renderAttack,
+} from "./dom4Ship";
 import { letComputerPlaceShips } from "./computerPlayer";
 import { shipYard } from "./shipYard";
 import { game, placeShipsInit } from "./main";

@@ -1,13 +1,8 @@
 import player from "./player";
 import { shipYard } from "./shipYard";
 import { game } from "./main";
-import {
-  cannotPlaceShip,
-  renderShips,
-  updateElementText,
-  createDomElement,
-  message,
-} from "./domManager";
+import { updateElementText, createDomElement, message } from "./domManager";
+import { cannotPlaceShip, renderShips } from "./dom4Ship";
 
 const computer = player("Computer");
 const shipyard = shipYard();
