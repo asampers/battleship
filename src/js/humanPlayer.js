@@ -17,12 +17,11 @@ function processCoords(e) {
 function activatePlayBtn() {
   let playBtn = createDomElement(
     "button",
-    "play btn btn-success",
+    "play btn btn-success mt-4",
     "Click here to start!"
   );
   let instructions = document.querySelector(".instructions");
-  instructions.innerHTML = `<span>Start sinking ships by clicking on coordinates on your opponent's board.<br>
-    Sink all 5 ships before your opponent to win!</span>`;
+  instructions.textContent = "";
   instructions.append(playBtn);
   playBtn.addEventListener("click", DomGame.renderGameReady);
 }
@@ -93,16 +92,16 @@ const playAndRenderComputerTurn = () => {
 };
 
 const placeShipsHuman = () => {
-  const player1Board = document.querySelector(".Player .board");
+  const playerBoard = document.querySelector(`.${game.playerName()} .board`);
 
   //preview ship placement when mouse enters tile
-  player1Board.addEventListener("mouseover", previewShipListener);
+  playerBoard.addEventListener("mouseover", previewShipListener);
 
   //clear ship preview when mouse leaves tile
-  player1Board.addEventListener("mouseout", previewShipListener);
+  playerBoard.addEventListener("mouseout", previewShipListener);
 
   //place ship (if possible) onClick
-  player1Board.addEventListener("click", placeShipListener);
+  playerBoard.addEventListener("click", placeShipListener);
 };
 
 export { rKeyListenter, playAndRenderHumanTurn, placeShipsHuman };

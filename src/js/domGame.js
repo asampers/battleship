@@ -11,7 +11,7 @@ function message(attack) {
     case "sunk":
       return `${game.playerName()} sunk a ship!`;
     case "won":
-      return `${game.playerName()} won!`;
+      return `${game.playerName().toUpperCase()} WON!`;
     case "over":
       return "GAME OVER.";
     case "placed":
@@ -23,7 +23,7 @@ const DomGame = (() => {
   const renderGameOver = () => {
     let resultNodes = document.querySelectorAll(".result");
     let actionNodes = document.querySelectorAll(".action");
-    let playAgain = document.querySelector(".play");
+
     for (const node of resultNodes) {
       node.textContent = message("won");
     }
@@ -36,23 +36,27 @@ const DomGame = (() => {
       ".instructions span",
       `Congratulations, ${game.playerName()}!`
     );
-    playAgain.className = "play btn btn-primary";
-    playAgain.textContent = "Reset";
-    playAgain.addEventListener("click", () => {
-      window.location.reload();
-    });
   };
 
   const renderGameReady = () => {
     let infoNodes = document.querySelectorAll(".info");
     let actionNodes = document.querySelectorAll(".action");
+    let resultNodes = document.querySelectorAll(".result");
+    let instructions = document.querySelector(".instructions");
     let playBtn = document.querySelector(".play");
     let player0 = document.querySelector(`.${game.playerName()}`);
     let player1 = document.querySelector(`.${game.opponentName()}`);
-    playBtn.className = "play d-none";
-
+    playBtn.className = "play btn btn-primary mt-4";
+    playBtn.textContent = "Reset";
+    instructions.innerHTML = `<span>Start sinking ships by clicking on coordinates on your opponent's board.<br>
+    Sink all 5 ships before your opponent to win!</span>`;
+    instructions.append(playBtn);
     for (const node of infoNodes) {
       node.textContent = "Ships remaining: 5";
+    }
+
+    for (const node of resultNodes) {
+      node.textContent = "No moves yet.";
     }
 
     actionNodes[0].textContent = `${game.opponentName()} guesses on this board.`;
@@ -66,6 +70,10 @@ const DomGame = (() => {
     player1.addEventListener("click", (e) => {
       if (game.winner || game.current == 1) return;
       playAndRenderHumanTurn(e);
+    });
+
+    playBtn.addEventListener("click", () => {
+      window.location.reload();
     });
   };
 

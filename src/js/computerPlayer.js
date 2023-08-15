@@ -37,7 +37,7 @@ const randomlyPlaceShips = () => {
     `.${game.playerName()} .info`,
     `Ships placed: ${game.playerShips().length} of 5`
   );
-  //DomShip.renderShips(game.playerName(), game.playerShips());
+  DomShip.renderShips(game.playerName(), game.playerShips());
   game.switchPlayers();
 };
 

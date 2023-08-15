@@ -1,4 +1,5 @@
 import { createDomElement } from "./domGame";
+import { game } from "./main";
 
 export const DomBoard = (() => {
   const renderRow = (x, board) => {
@@ -39,7 +40,7 @@ export const DomBoard = (() => {
       "info",
       `Ships placed: ${boardGame.ships.length}`
     );
-    const result = createDomElement("div", "result", "No moves yet.");
+    const result = createDomElement("div", "result", "");
     const board = createDomElement("div", "board grid container", "");
 
     renderBoardTiles(board);
@@ -53,8 +54,8 @@ export const DomBoard = (() => {
     const board = document.createElement("div");
     board.className = "board grid container";
     renderBoardTiles(board);
-    const player1Board = document.querySelector(".Player .board");
-    player1Board.parentNode.replaceChild(board, player1Board);
+    const playerBoard = document.querySelector(`.${game.playerName()} .board`);
+    playerBoard.parentNode.replaceChild(board, playerBoard);
   };
 
   return { renderBoard, replaceBoard };
