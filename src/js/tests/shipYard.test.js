@@ -1,4 +1,4 @@
-import { ShipYard } from "./shipYard";
+import { ShipYard } from "../shipYard";
 
 test("gives correct coordinates for horizontal", () => {
   let coords = ShipYard.getTotalCoords([1, 1]);
