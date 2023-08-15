@@ -2,7 +2,7 @@ import player from "./player";
 import { shipYard } from "./shipYard";
 import { game } from "./main";
 import { updateElementText, createDomElement, message } from "./dom4Game";
-import { cannotPlaceShip, renderShips } from "./dom4Ship";
+import { DomShip } from "./dom4Ship";
 
 const computer = player("Computer");
 const shipyard = shipYard();
@@ -16,7 +16,7 @@ const randomlyChangeOrientation = () => {
 
 const getValidShipPlacement = () => {
   let totalCoords = shipyard.getTotalCoords(computer.newRandomGuess());
-  while (cannotPlaceShip(totalCoords)) {
+  while (DomShip.cannotPlaceShip(totalCoords)) {
     randomlyChangeOrientation();
     totalCoords = shipyard.getTotalCoords(computer.newRandomGuess());
   }
@@ -37,7 +37,7 @@ const randomlyPlaceShips = () => {
     `.${game.playerName()} .info`,
     `Ships placed: ${game.playerShips().length} of 5`
   );
-  //renderShips(game.playerName(), game.playerShips());
+  //DomShip.renderShips(game.playerName(), game.playerShips());
   game.switchPlayers();
 };
 

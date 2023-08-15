@@ -1,11 +1,6 @@
 import { DomGame, updateElementText, createDomElement } from "./dom4Game";
 import { DomBoard } from "./dom4Board";
-import {
-  renderShips,
-  previewShip,
-  cannotPlaceShip,
-  renderAttack,
-} from "./dom4Ship";
+import { DomShip } from "./dom4Ship";
 import { letComputerPlaceShips } from "./computerPlayer";
 import { shipYard } from "./shipYard";
 import { game } from "./main";
@@ -37,17 +32,17 @@ function rKeyListenter(e) {
     ShipYard.changeOrientation();
     DomBoard.replaceBoard();
     placeShipsHuman();
-    renderShips(game.playerName(), game.playerShips());
+    DomShip.renderShips(game.playerName(), game.playerShips());
   }
 }
 
 function previewShipListener(e) {
-  previewShip(ShipYard.getTotalCoords(e));
+  DomShip.previewShip(ShipYard.getTotalCoords(e));
 }
 
 function placeShipListener(e) {
   let totalCoords = ShipYard.getTotalCoords(e);
-  if (cannotPlaceShip(totalCoords)) return;
+  if (DomShip.cannotPlaceShip(totalCoords)) return;
 
   game.gameBoards[game.current].placeShip(totalCoords);
   let ships = game.playerShips();
@@ -64,13 +59,13 @@ function placeShipListener(e) {
     letComputerPlaceShips();
     setTimeout(activatePlayBtn, 3000);
   }
-  renderShips("Player", ships);
+  DomShip.renderShips("Player", ships);
 }
 
 const renderTurn = (coord, attack) => {
   let player = game.opponentName();
   let ships = game.gameBoards[game.opponent].remainingShips();
-  renderAttack(coord, attack);
+  DomShip.renderAttack(coord, attack);
   updateElementText(`.${player} .info`, `Ships remaining: ${ships}`);
 
   game.winner ? DomGame.renderGameOver() : null;
@@ -110,10 +105,4 @@ const placeShipsHuman = () => {
   player1Board.addEventListener("click", placeShipListener);
 };
 
-export {
-  previewShipListener,
-  placeShipListener,
-  rKeyListenter,
-  playAndRenderHumanTurn,
-  placeShipsHuman,
-};
+export { rKeyListenter, playAndRenderHumanTurn, placeShipsHuman };
