@@ -75,6 +75,10 @@ const DomGame = (() => {
   };
 
   const gameInitialize = () => {
+    const content = document.querySelector(".container");
+    const instructions = document.querySelector(".instructions");
+    const boards = document.createElement("div");
+
     const player1 = DomBoard.renderBoard(
       "Player",
       "place ships on this board.",
@@ -83,19 +87,15 @@ const DomGame = (() => {
 
     const player2 = DomBoard.renderBoard(
       "Computer",
-      "waiting for Player to place their ships!",
+      "Waiting for you to place your ships...",
       game.gameBoards[game.opponent]
     );
 
-    let instructions = document.querySelector(".instructions");
+    boards.className = "d-flex";
     instructions.innerHTML = `<span>To place your ship, hover over your board and click on a coordinate. <br>
       Press <b>r</b> to rotate your ship prior to placement.</span>`;
 
-    const boards = document.createElement("div");
-    boards.className = "d-flex";
     boards.append(player1, player2);
-
-    const content = document.querySelector(".container");
     content.append(boards);
   };
 
