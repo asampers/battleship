@@ -1,6 +1,6 @@
 import { game } from "./main";
 import { playAndRenderHumanTurn } from "./humanPlayer";
-import { renderBoard, replaceBoard } from "./dom4Board";
+import { DomBoard } from "./dom4Board";
 
 function message(attack) {
   switch (attack) {
@@ -71,17 +71,17 @@ const DomGame = (() => {
 
   const renderPlayerReady = () => {
     updateElementText(`.${game.playerName()} .action`, message("placed"));
-    replaceBoard();
+    DomBoard.replaceBoard();
   };
 
   const gameInitialize = () => {
-    const player1 = renderBoard(
+    const player1 = DomBoard.renderBoard(
       "Player",
       "place ships on this board.",
       game.gameBoards[game.current]
     );
 
-    const player2 = renderBoard(
+    const player2 = DomBoard.renderBoard(
       "Computer",
       "waiting for Player to place their ships!",
       game.gameBoards[game.opponent]

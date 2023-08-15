@@ -1,5 +1,5 @@
 import { DomGame, updateElementText, createDomElement } from "./dom4Game";
-import { replaceBoard } from "./dom4Board";
+import { DomBoard } from "./dom4Board";
 import {
   renderShips,
   previewShip,
@@ -35,7 +35,7 @@ function activatePlayBtn() {
 function rKeyListenter(e) {
   if (e.key == "r") {
     ShipYard.changeOrientation();
-    replaceBoard();
+    DomBoard.replaceBoard();
     placeShipsHuman();
     renderShips(game.playerName(), game.playerShips());
   }
