@@ -4,7 +4,7 @@ import {
   createDomElement,
   renderGameReady,
   renderGameOver,
-} from "./domManager";
+} from "./dom4Game";
 import { replaceBoard } from "./dom4Board";
 import {
   renderShips,

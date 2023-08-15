@@ -1,7 +1,7 @@
 import player from "./player";
 import { shipYard } from "./shipYard";
 import { game } from "./main";
-import { updateElementText, createDomElement, message } from "./domManager";
+import { updateElementText, createDomElement, message } from "./dom4Game";
 import { cannotPlaceShip, renderShips } from "./dom4Ship";
 
 const computer = player("Computer");

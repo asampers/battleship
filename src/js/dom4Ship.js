@@ -1,4 +1,4 @@
-import { updateElementText, message } from "./domManager";
+import { updateElementText, message } from "./dom4Game";
 import { game } from "./main";
 
 const findTile = (player, position) => {

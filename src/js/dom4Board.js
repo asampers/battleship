@@ -1,4 +1,4 @@
-import { createDomElement } from "./domManager";
+import { createDomElement } from "./dom4Game";
 
 const renderRow = (x, board) => {
   for (let y = 0; y < 10; y++) {
