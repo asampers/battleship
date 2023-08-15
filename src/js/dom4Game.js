@@ -1,6 +1,6 @@
 import { game } from "./main";
-import { playAndRenderHumanTurn } from "./listeners";
-import { replaceBoard } from "./dom4Board";
+import { playAndRenderHumanTurn } from "./humanPlayer";
+import { renderBoard, replaceBoard } from "./dom4Board";
 
 function message(attack) {
   switch (attack) {
@@ -85,11 +85,37 @@ const renderPlayerReady = () => {
   replaceBoard();
 };
 
+const gameInitialize = () => {
+  const player1 = renderBoard(
+    "Player",
+    "place ships on this board.",
+    game.gameBoards[game.current]
+  );
+
+  const player2 = renderBoard(
+    "Computer",
+    "waiting for Player to place their ships!",
+    game.gameBoards[game.opponent]
+  );
+
+  let instructions = document.querySelector(".instructions");
+  instructions.innerHTML = `<span>To place your ship, hover over your board and click on a coordinate. <br>
+    Press <b>r</b> to rotate your ship prior to placement.</span>`;
+
+  const boards = document.createElement("div");
+  boards.className = "d-flex";
+  boards.append(player1, player2);
+
+  const content = document.querySelector(".container");
+  content.append(boards);
+};
+
 export {
   updateElementText,
   createDomElement,
   renderGameOver,
   renderGameReady,
+  gameInitialize,
   renderPlayerReady,
   message,
 };

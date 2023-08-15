@@ -42,7 +42,7 @@ function rKeyListenter(e) {
   if (e.key == "r") {
     ShipYard.changeOrientation();
     replaceBoard();
-    placeShipsInit();
+    placeShipsHuman();
     renderShips(game.playerName(), game.playerShips());
   }
 }
@@ -103,9 +103,23 @@ const playAndRenderComputerTurn = () => {
   }
 };
 
+const placeShipsHuman = () => {
+  const player1Board = document.querySelector(".Player .board");
+
+  //preview ship placement when mouse enters tile
+  player1Board.addEventListener("mouseover", previewShipListener);
+
+  //clear ship preview when mouse leaves tile
+  player1Board.addEventListener("mouseout", previewShipListener);
+
+  //place ship (if possible) onClick
+  player1Board.addEventListener("click", placeShipListener);
+};
+
 export {
   previewShipListener,
   placeShipListener,
   rKeyListenter,
   playAndRenderHumanTurn,
+  placeShipsHuman,
 };

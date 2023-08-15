@@ -8,6 +8,7 @@ function processCoords(e) {
 function playerIsHuman(e) {
   return ["click", "mouseover", "mouseout"].includes(e.type);
 }
+
 function shipYard() {
   const shipYard = {
     shipLengths: [5, 4, 3, 3, 2],
