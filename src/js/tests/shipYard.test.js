@@ -1,4 +1,6 @@
-import { ShipYard } from "../shipYard";
+import { shipYard } from "../shipYard";
+
+const ShipYard = shipYard();
 
 test("gives correct coordinates for horizontal", () => {
   let coords = ShipYard.getTotalCoords([1, 1]);
