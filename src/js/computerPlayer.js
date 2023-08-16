@@ -79,7 +79,7 @@ const randomlyPlaceShips = () => {
     shipyard.launchShip();
   }
   renderPlayerReady();
-  DomShip.renderShips(game.playerName(), game.playerShips());
+  //DomShip.renderShips(game.playerName(), game.playerShips());  this is for testing
   game.switchPlayers();
 };
 

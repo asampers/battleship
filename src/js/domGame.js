@@ -87,7 +87,7 @@ const DomGame = (() => {
       game.gameBoards[game.opponent]
     );
 
-    boards.className = "d-flex";
+    boards.className = "d-flex flex-column flex-md-row";
     instructions.innerHTML = `<span>To place your ship, hover over your board and click on a coordinate. <br>
       Press <b>r</b> to rotate your ship prior to placement.</span>`;
 
