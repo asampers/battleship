@@ -23,7 +23,7 @@ function advanceShipCounter() {
   setTimeout(timeoutLoop, delay);
 }
 
-function renderAllCompTurns(tiles, results, attack) {
+function renderAllCompTurns(tiles, results) {
   let inc = 0;
   let max = tiles.length;
   let delay = tiles.length == 1 ? 0 : 500;
@@ -31,7 +31,7 @@ function renderAllCompTurns(tiles, results, attack) {
   function timeoutLoop() {
     renderTurn(tiles[inc], results[inc]);
     if (++inc < max) setTimeout(timeoutLoop, delay);
-    if (inc == max) game.switchPlayersIfNeeded(attack);
+    if (inc == max) game.switchPlayers();
   }
 
   setTimeout(timeoutLoop, delay);
@@ -100,7 +100,7 @@ const playAndRenderComputerTurn = () => {
     tiles.push(coord);
     results.push(attack);
   }
-  renderAllCompTurns(tiles, results, attack);
+  renderAllCompTurns(tiles, results);
 };
 
 export { letComputerPlaceShips, playAndRenderComputerTurn };

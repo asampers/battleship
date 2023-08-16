@@ -39,7 +39,7 @@ const DomGame = (() => {
     let resultNodes = document.querySelectorAll(".result");
     let instructions = document.querySelector(".instructions");
     let playBtn = document.querySelector(".play");
-    let player0 = document.querySelector(`.${game.playerName()}`);
+    //let player0 = document.querySelector(`.${game.playerName()}`);
     let player1 = document.querySelector(`.${game.opponentName()}`);
     playBtn.className = "play btn btn-primary mt-4";
     playBtn.textContent = "Reset";
@@ -53,10 +53,12 @@ const DomGame = (() => {
     actionNodes[0].textContent = `${game.opponentName()} guesses on this board.`;
     actionNodes[1].textContent = "Click on this board to sink their ships.";
 
+    /* Add this back in when there's a human vs human option
     player0.addEventListener("click", (e) => {
       if (game.winner || game.current == 0) return;
       playAndRenderHumanTurn(e);
     });
+    */
 
     player1.addEventListener("click", (e) => {
       if (game.winner || game.current == 1) return;
