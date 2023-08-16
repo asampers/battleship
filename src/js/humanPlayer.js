@@ -58,7 +58,6 @@ function placeShipListener(e) {
 
   if (ShipYard.allShipsPlaced() && game.playingAgainstComputer()) {
     renderPlayerReady();
-    window.removeEventListener("keydown", rKeyListenter);
     game.switchPlayers();
     letComputerPlaceShips();
     setTimeout(activatePlayBtn, 3000);
@@ -120,6 +119,7 @@ const removeShipListeners = () => {
   playerBoard.removeEventListener("mouseover", previewShipListener);
   playerBoard.removeEventListener("mouseout", previewShipListener);
   playerBoard.removeEventListener("click", placeShipListener);
+  window.removeEventListener("keydown", rKeyListenter);
 };
 
 export {
