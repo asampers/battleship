@@ -66,6 +66,11 @@ export const DomShip = (() => {
     tile.classList.add(tileStatus);
   };
 
+  const setResultClass = (thisPlayer, status) => {
+    let result = document.querySelector(`.${thisPlayer} .result`);
+    result.className = `result m-1 p-1 rounded ${status}`;
+  };
+
   const renderShips = (player, gameShips) => {
     for (const ship of gameShips) {
       ship.coordinates.forEach((position) => {
@@ -86,6 +91,7 @@ export const DomShip = (() => {
     let tile = findTile(thisBoard, coord);
 
     setTileStatus(tile, attack);
+    setResultClass(thisPlayer, attack);
     updateElementText(`.${thisPlayer} .result`, message(attack));
   };
 

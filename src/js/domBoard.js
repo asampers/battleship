@@ -34,13 +34,13 @@ export const DomBoard = (() => {
       ""
     );
     const title = createDomElement("h1", "", player);
-    const action = createDomElement("div", "action", actionText);
+    const action = createDomElement("div", "action m-1", actionText);
     const info = createDomElement(
       "div",
-      "info",
+      "info m-1",
       `Ships placed: ${boardGame.ships.length}`
     );
-    const result = createDomElement("div", "result", "");
+    const result = createDomElement("div", "result m-1 p-1 rounded", "");
     const board = createDomElement("div", "board grid container", "");
 
     renderBoardTiles(board);

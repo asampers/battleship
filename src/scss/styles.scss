@@ -33,11 +33,21 @@
 }
 
 .hit, .sunk {
-  content: "X";
   background: red;
 }
 
 .miss {
-  content: "--";
   background: lightblue;
+}
+
+.result.hit {
+  background-color: $danger-bg-subtle;
+}
+
+.result.sunk {
+  background-color: $success-bg-subtle;
+}
+
+.result.miss {
+  background-color: $primary-bg-subtle;
 }
