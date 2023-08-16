@@ -5,11 +5,11 @@ import "../scss/styles.scss";
 import * as bootstrap from "bootstrap";
 import { DomGame } from "./domGame";
 import Game from "./game";
-import { placeShipsHuman, rKeyListenter } from "./humanPlayer";
+import { addShipListeners, rKeyListenter } from "./humanPlayer";
 
 const game = Game();
 DomGame.gameInitialize();
-placeShipsHuman();
+addShipListeners();
 
 window.addEventListener("keydown", rKeyListenter);
 

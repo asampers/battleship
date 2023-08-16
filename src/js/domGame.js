@@ -68,11 +68,6 @@ const DomGame = (() => {
     });
   };
 
-  const renderPlayerReady = () => {
-    updateElementText(`.${game.playerName()} .action`, message("placed"));
-    DomBoard.replaceBoard();
-  };
-
   const gameInitialize = () => {
     const content = document.querySelector(".container");
     const instructions = document.querySelector(".instructions");
@@ -98,7 +93,7 @@ const DomGame = (() => {
     content.append(boards);
   };
 
-  return { renderGameOver, renderGameReady, gameInitialize, renderPlayerReady };
+  return { renderGameOver, renderGameReady, gameInitialize };
 })();
 
 const createDomElement = (type, className, textContent) => {

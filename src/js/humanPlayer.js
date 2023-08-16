@@ -1,4 +1,9 @@
-import { DomGame, updateElementText, createDomElement } from "./domGame";
+import {
+  DomGame,
+  updateElementText,
+  createDomElement,
+  message,
+} from "./domGame";
 import { DomBoard } from "./domBoard";
 import { DomShip } from "./domShip";
 import { letComputerPlaceShips } from "./computerPlayer";
@@ -30,7 +35,7 @@ function rKeyListenter(e) {
   if (e.key == "r") {
     ShipYard.changeOrientation();
     DomBoard.replaceBoard();
-    placeShipsHuman();
+    addShipListeners();
     DomShip.renderShips(game.playerName(), game.playerShips());
   }
 }
@@ -48,11 +53,11 @@ function placeShipListener(e) {
   ShipYard.launchShip();
   updateElementText(
     `.${game.playerName()} .info`,
-    `Ships placed: ${game.playerShips().length} of 5`
+    `Ships placed: ${ships.length} of 5`
   );
 
   if (ShipYard.allShipsPlaced() && game.playingAgainstComputer()) {
-    DomGame.renderPlayerReady();
+    renderPlayerReady();
     window.removeEventListener("keydown", rKeyListenter);
     game.switchPlayers();
     letComputerPlaceShips();
@@ -60,6 +65,11 @@ function placeShipListener(e) {
   }
   DomShip.renderShips("Player", ships);
 }
+
+const renderPlayerReady = () => {
+  updateElementText(`.${game.playerName()} .action`, message("placed"));
+  removeShipListeners();
+};
 
 const renderTurn = (coord, attack) => {
   let player = game.opponentName();
@@ -91,7 +101,7 @@ const playAndRenderComputerTurn = () => {
   }
 };
 
-const placeShipsHuman = () => {
+const addShipListeners = () => {
   const playerBoard = document.querySelector(`.${game.playerName()} .board`);
 
   //preview ship placement when mouse enters tile
@@ -104,4 +114,17 @@ const placeShipsHuman = () => {
   playerBoard.addEventListener("click", placeShipListener);
 };
 
-export { rKeyListenter, playAndRenderHumanTurn, placeShipsHuman };
+const removeShipListeners = () => {
+  const playerBoard = document.querySelector(`.${game.playerName()} .board`);
+
+  playerBoard.removeEventListener("mouseover", previewShipListener);
+  playerBoard.removeEventListener("mouseout", previewShipListener);
+  playerBoard.removeEventListener("click", placeShipListener);
+};
+
+export {
+  rKeyListenter,
+  playAndRenderHumanTurn,
+  addShipListeners,
+  renderPlayerReady,
+};

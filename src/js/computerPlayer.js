@@ -1,11 +1,27 @@
 import player from "./player";
 import { shipYard } from "./shipYard";
 import { game } from "./main";
-import { updateElementText, createDomElement, message } from "./domGame";
+import { updateElementText, createDomElement } from "./domGame";
 import { DomShip } from "./domShip";
+import { renderPlayerReady } from "./humanPlayer";
 
 const computer = player("Computer");
 const shipyard = shipYard();
+
+function advanceShipCounter() {
+  let inc = 1;
+  let max = 6;
+  let delay = 550; // 100 milliseconds
+
+  function timeoutLoop() {
+    document.querySelector(
+      `.${game.playerName()} .info`
+    ).textContent = `Ships placed: ${inc} of 5`;
+    if (++inc < max) setTimeout(timeoutLoop, delay);
+  }
+
+  setTimeout(timeoutLoop, delay);
+}
 
 const randomlyChangeOrientation = () => {
   let roll = Math.floor(Math.random() * 11);
@@ -32,11 +48,7 @@ const randomlyPlaceShips = () => {
     game.gameBoards[game.current].placeShip(totalCoords);
     shipyard.launchShip();
   }
-  updateElementText(`.${game.playerName()} .action`, message("placed"));
-  updateElementText(
-    `.${game.playerName()} .info`,
-    `Ships placed: ${game.playerShips().length} of 5`
-  );
+  renderPlayerReady();
   DomShip.renderShips(game.playerName(), game.playerShips());
   game.switchPlayers();
 };
@@ -56,6 +68,7 @@ const letComputerPlaceShips = async () => {
   );
   actionNode.prepend(spinner);
   actionNode.append(spinner2);
+  advanceShipCounter();
   setTimeout(randomlyPlaceShips, 3000);
 };
 
