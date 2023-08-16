@@ -120,4 +120,5 @@ export {
   playAndRenderHumanTurn,
   addShipListeners,
   renderPlayerReady,
+  renderTurn,
 };
