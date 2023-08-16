@@ -6,7 +6,10 @@ import {
 } from "./domGame";
 import { DomBoard } from "./domBoard";
 import { DomShip } from "./domShip";
-import { letComputerPlaceShips } from "./computerPlayer";
+import {
+  letComputerPlaceShips,
+  playAndRenderComputerTurn,
+} from "./computerPlayer";
 import { shipYard } from "./shipYard";
 import { game } from "./main";
 
@@ -87,16 +90,6 @@ const playAndRenderHumanTurn = (e) => {
   game.switchPlayersIfNeeded(attack);
   if (game.playingAgainstComputer() && game.isComputersTurn()) {
     playAndRenderComputerTurn();
-  }
-};
-
-const playAndRenderComputerTurn = () => {
-  let attack;
-  while (attack != "miss") {
-    let coord = game.players[1].makeGuess();
-    attack = game.playRound(coord);
-    renderTurn(coord, attack);
-    game.switchPlayersIfNeeded(attack);
   }
 };
 

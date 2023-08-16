@@ -3,7 +3,7 @@ import { shipYard } from "./shipYard";
 import { game } from "./main";
 import { updateElementText, createDomElement } from "./domGame";
 import { DomShip } from "./domShip";
-import { renderPlayerReady } from "./humanPlayer";
+import { renderPlayerReady, renderTurn } from "./humanPlayer";
 
 const computer = player("Computer");
 const shipyard = shipYard();
@@ -72,4 +72,14 @@ const letComputerPlaceShips = async () => {
   setTimeout(randomlyPlaceShips, 3000);
 };
 
-export { letComputerPlaceShips };
+const playAndRenderComputerTurn = () => {
+  let attack;
+  while (attack != "miss") {
+    let coord = game.players[1].makeGuess();
+    attack = game.playRound(coord);
+    renderTurn(coord, attack);
+    game.switchPlayersIfNeeded(attack);
+  }
+};
+
+export { letComputerPlaceShips, playAndRenderComputerTurn };
