@@ -23,6 +23,22 @@ function advanceShipCounter() {
   setTimeout(timeoutLoop, delay);
 }
 
+const addSpinnersToUpdate = () => {
+  let actionNode = document.querySelector(".Computer .action");
+  let spinner = createDomElement(
+    "span",
+    "spinner-border text-secondary spinner-border-sm me-2",
+    ""
+  );
+  let spinner2 = createDomElement(
+    "span",
+    "spinner-border text-secondary spinner-border-sm me-2",
+    ""
+  );
+  actionNode.prepend(spinner);
+  actionNode.append(spinner2);
+};
+
 const randomlyChangeOrientation = () => {
   let roll = Math.floor(Math.random() * 11);
   if (roll <= 5) {
@@ -55,19 +71,7 @@ const randomlyPlaceShips = () => {
 
 const letComputerPlaceShips = async () => {
   updateElementText(`.${game.playerName()} .action`, "...is placing ships...");
-  let actionNode = document.querySelector(".Computer .action");
-  let spinner = createDomElement(
-    "span",
-    "spinner-border text-secondary spinner-border-sm me-2",
-    ""
-  );
-  let spinner2 = createDomElement(
-    "span",
-    "spinner-border text-secondary spinner-border-sm me-2",
-    ""
-  );
-  actionNode.prepend(spinner);
-  actionNode.append(spinner2);
+  addSpinnersToUpdate();
   advanceShipCounter();
   setTimeout(randomlyPlaceShips, 3000);
 };
