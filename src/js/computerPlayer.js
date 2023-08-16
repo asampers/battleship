@@ -23,6 +23,20 @@ function advanceShipCounter() {
   setTimeout(timeoutLoop, delay);
 }
 
+function renderAllCompTurns(tiles, results, attack) {
+  let inc = 0;
+  let max = tiles.length;
+  let delay = tiles.length == 1 ? 0 : 500;
+
+  function timeoutLoop() {
+    renderTurn(tiles[inc], results[inc]);
+    if (++inc < max) setTimeout(timeoutLoop, delay);
+    if (inc == max) game.switchPlayersIfNeeded(attack);
+  }
+
+  setTimeout(timeoutLoop, delay);
+}
+
 const addSpinnersToUpdate = () => {
   let actionNode = document.querySelector(".Computer .action");
   let spinner = createDomElement(
@@ -78,12 +92,15 @@ const letComputerPlaceShips = async () => {
 
 const playAndRenderComputerTurn = () => {
   let attack;
+  let tiles = [];
+  let results = [];
   while (attack != "miss") {
     let coord = game.players[1].makeGuess();
     attack = game.playRound(coord);
-    renderTurn(coord, attack);
-    game.switchPlayersIfNeeded(attack);
+    tiles.push(coord);
+    results.push(attack);
   }
+  renderAllCompTurns(tiles, results, attack);
 };
 
 export { letComputerPlaceShips, playAndRenderComputerTurn };
